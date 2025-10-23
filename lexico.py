@@ -64,6 +64,7 @@ def t_ID(t):
 # Números
 def t_NUM(t):
     r'[0-9]+'
+    t.value = int(t.value)
     return t
 
 # Ignora espaços e tabulações
