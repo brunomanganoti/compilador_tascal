@@ -1,0 +1,2817 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> programa
+Rule 1     programa -> cabecalho bloco .
+Rule 2     cabecalho -> PROGRAM ID ;
+Rule 3     bloco -> parte_declaracoes parte_comandos
+Rule 4     parte_declaracoes -> VAR lista_declaracoes
+Rule 5     parte_declaracoes -> empty
+Rule 6     lista_declaracoes -> lista_declaracoes declaracao
+Rule 7     lista_declaracoes -> declaracao
+Rule 8     declaracao -> lista_ids DOIS_PONTOS tipo ;
+Rule 9     declaracao -> error DOIS_PONTOS tipo ;
+Rule 10    lista_ids -> lista_ids , ID
+Rule 11    lista_ids -> ID
+Rule 12    tipo -> INTEGER
+Rule 13    tipo -> BOOLEAN
+Rule 14    parte_comandos -> BEGIN lista_comandos END
+Rule 15    lista_comandos -> lista_comandos_nao_vazia
+Rule 16    lista_comandos -> empty
+Rule 17    lista_comandos_nao_vazia -> lista_comandos_nao_vazia ; comando
+Rule 18    lista_comandos_nao_vazia -> comando
+Rule 19    comando -> atribuicao
+Rule 20    comando -> condicional
+Rule 21    comando -> repeticao
+Rule 22    comando -> chamada_read
+Rule 23    comando -> chamada_write
+Rule 24    comando -> comando_composto
+Rule 25    comando_composto -> BEGIN lista_comandos END
+Rule 26    atribuicao -> ID ATRIBUICAO expressao
+Rule 27    condicional -> IF expressao THEN comando else_opcional
+Rule 28    else_opcional -> ELSE comando
+Rule 29    else_opcional -> empty
+Rule 30    repeticao -> WHILE expressao DO comando
+Rule 31    chamada_read -> READ ( lista_ids_read )
+Rule 32    lista_ids_read -> lista_ids
+Rule 33    lista_ids_read -> empty
+Rule 34    chamada_write -> WRITE ( lista_exp_write )
+Rule 35    chamada_write -> WRITE ( error )
+Rule 36    lista_exp_write -> lista_expressoes
+Rule 37    lista_exp_write -> empty
+Rule 38    lista_expressoes -> lista_expressoes , expressao
+Rule 39    lista_expressoes -> expressao
+Rule 40    expressao -> expressao + expressao
+Rule 41    expressao -> expressao - expressao
+Rule 42    expressao -> expressao * expressao
+Rule 43    expressao -> expressao DIV expressao
+Rule 44    expressao -> expressao OR expressao
+Rule 45    expressao -> expressao AND expressao
+Rule 46    expressao -> expressao = expressao
+Rule 47    expressao -> expressao DIFERENTE expressao
+Rule 48    expressao -> expressao MENOR expressao
+Rule 49    expressao -> expressao MENOR_IGUAL expressao
+Rule 50    expressao -> expressao MAIOR expressao
+Rule 51    expressao -> expressao MAIOR_IGUAL expressao
+Rule 52    expressao -> NOT expressao
+Rule 53    expressao -> - expressao
+Rule 54    expressao -> ( expressao )
+Rule 55    expressao -> fator
+Rule 56    fator -> ID
+Rule 57    fator -> NUM
+Rule 58    fator -> TRUE
+Rule 59    fator -> FALSE
+Rule 60    cabecalho -> error ID ;
+Rule 61    cabecalho -> PROGRAM error ;
+Rule 62    cabecalho -> PROGRAM ID error
+Rule 63    parte_comandos -> error lista_comandos END
+Rule 64    parte_comandos -> BEGIN lista_comandos error
+Rule 65    empty -> <empty>
+
+Terminals, with rules where they appear
+
+(                    : 31 34 35 54
+)                    : 31 34 35 54
+*                    : 42
++                    : 40
+,                    : 10 38
+-                    : 41 53
+.                    : 1
+;                    : 2 8 9 17 60 61
+=                    : 46
+AND                  : 45
+ATRIBUICAO           : 26
+BEGIN                : 14 25 64
+BOOLEAN              : 13
+DIFERENTE            : 47
+DIV                  : 43
+DO                   : 30
+DOIS_PONTOS          : 8 9
+ELSE                 : 28
+END                  : 14 25 63
+FALSE                : 59
+ID                   : 2 10 11 26 56 60 62
+IF                   : 27
+INTEGER              : 12
+MAIOR                : 50
+MAIOR_IGUAL          : 51
+MENOR                : 48
+MENOR_IGUAL          : 49
+NOT                  : 52
+NUM                  : 57
+OR                   : 44
+PROGRAM              : 2 61 62
+READ                 : 31
+THEN                 : 27
+TRUE                 : 58
+VAR                  : 4
+WHILE                : 30
+WRITE                : 34 35
+error                : 9 35 60 61 62 63 64
+
+Nonterminals, with rules where they appear
+
+atribuicao           : 19
+bloco                : 1
+cabecalho            : 1
+chamada_read         : 22
+chamada_write        : 23
+comando              : 17 18 27 28 30
+comando_composto     : 24
+condicional          : 20
+declaracao           : 6 7
+else_opcional        : 27
+empty                : 5 16 29 33 37
+expressao            : 26 27 30 38 39 40 40 41 41 42 42 43 43 44 44 45 45 46 46 47 47 48 48 49 49 50 50 51 51 52 53 54
+fator                : 55
+lista_comandos       : 14 25 63 64
+lista_comandos_nao_vazia : 15 17
+lista_declaracoes    : 4 6
+lista_exp_write      : 34
+lista_expressoes     : 36 38
+lista_ids            : 8 10 32
+lista_ids_read       : 31
+parte_comandos       : 3
+parte_declaracoes    : 3
+programa             : 0
+repeticao            : 21
+tipo                 : 8 9
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . programa
+    (1) programa -> . cabecalho bloco .
+    (2) cabecalho -> . PROGRAM ID ;
+    (60) cabecalho -> . error ID ;
+    (61) cabecalho -> . PROGRAM error ;
+    (62) cabecalho -> . PROGRAM ID error
+
+    PROGRAM         shift and go to state 3
+    error           shift and go to state 4
+
+    programa                       shift and go to state 1
+    cabecalho                      shift and go to state 2
+
+state 1
+
+    (0) S' -> programa .
+
+
+
+state 2
+
+    (1) programa -> cabecalho . bloco .
+    (3) bloco -> . parte_declaracoes parte_comandos
+    (4) parte_declaracoes -> . VAR lista_declaracoes
+    (5) parte_declaracoes -> . empty
+    (65) empty -> .
+
+    VAR             shift and go to state 7
+    BEGIN           reduce using rule 65 (empty -> .)
+    error           reduce using rule 65 (empty -> .)
+
+    bloco                          shift and go to state 5
+    parte_declaracoes              shift and go to state 6
+    empty                          shift and go to state 8
+
+state 3
+
+    (2) cabecalho -> PROGRAM . ID ;
+    (61) cabecalho -> PROGRAM . error ;
+    (62) cabecalho -> PROGRAM . ID error
+
+    ID              shift and go to state 9
+    error           shift and go to state 10
+
+
+state 4
+
+    (60) cabecalho -> error . ID ;
+
+    ID              shift and go to state 11
+
+
+state 5
+
+    (1) programa -> cabecalho bloco . .
+
+    .               shift and go to state 12
+
+
+state 6
+
+    (3) bloco -> parte_declaracoes . parte_comandos
+    (14) parte_comandos -> . BEGIN lista_comandos END
+    (63) parte_comandos -> . error lista_comandos END
+    (64) parte_comandos -> . BEGIN lista_comandos error
+
+    BEGIN           shift and go to state 14
+    error           shift and go to state 15
+
+    parte_comandos                 shift and go to state 13
+
+state 7
+
+    (4) parte_declaracoes -> VAR . lista_declaracoes
+    (6) lista_declaracoes -> . lista_declaracoes declaracao
+    (7) lista_declaracoes -> . declaracao
+    (8) declaracao -> . lista_ids DOIS_PONTOS tipo ;
+    (9) declaracao -> . error DOIS_PONTOS tipo ;
+    (10) lista_ids -> . lista_ids , ID
+    (11) lista_ids -> . ID
+
+    error           shift and go to state 19
+    ID              shift and go to state 20
+
+    lista_declaracoes              shift and go to state 16
+    declaracao                     shift and go to state 17
+    lista_ids                      shift and go to state 18
+
+state 8
+
+    (5) parte_declaracoes -> empty .
+
+    BEGIN           reduce using rule 5 (parte_declaracoes -> empty .)
+    error           reduce using rule 5 (parte_declaracoes -> empty .)
+
+
+state 9
+
+    (2) cabecalho -> PROGRAM ID . ;
+    (62) cabecalho -> PROGRAM ID . error
+
+    ;               shift and go to state 21
+    error           shift and go to state 22
+
+
+state 10
+
+    (61) cabecalho -> PROGRAM error . ;
+
+    ;               shift and go to state 23
+
+
+state 11
+
+    (60) cabecalho -> error ID . ;
+
+    ;               shift and go to state 24
+
+
+state 12
+
+    (1) programa -> cabecalho bloco . .
+
+    $end            reduce using rule 1 (programa -> cabecalho bloco . .)
+
+
+state 13
+
+    (3) bloco -> parte_declaracoes parte_comandos .
+
+    .               reduce using rule 3 (bloco -> parte_declaracoes parte_comandos .)
+
+
+state 14
+
+    (14) parte_comandos -> BEGIN . lista_comandos END
+    (64) parte_comandos -> BEGIN . lista_comandos error
+    (15) lista_comandos -> . lista_comandos_nao_vazia
+    (16) lista_comandos -> . empty
+    (17) lista_comandos_nao_vazia -> . lista_comandos_nao_vazia ; comando
+    (18) lista_comandos_nao_vazia -> . comando
+    (65) empty -> .
+    (19) comando -> . atribuicao
+    (20) comando -> . condicional
+    (21) comando -> . repeticao
+    (22) comando -> . chamada_read
+    (23) comando -> . chamada_write
+    (24) comando -> . comando_composto
+    (26) atribuicao -> . ID ATRIBUICAO expressao
+    (27) condicional -> . IF expressao THEN comando else_opcional
+    (30) repeticao -> . WHILE expressao DO comando
+    (31) chamada_read -> . READ ( lista_ids_read )
+    (34) chamada_write -> . WRITE ( lista_exp_write )
+    (35) chamada_write -> . WRITE ( error )
+    (25) comando_composto -> . BEGIN lista_comandos END
+
+    END             reduce using rule 65 (empty -> .)
+    error           reduce using rule 65 (empty -> .)
+    ID              shift and go to state 36
+    IF              shift and go to state 37
+    WHILE           shift and go to state 38
+    READ            shift and go to state 39
+    WRITE           shift and go to state 40
+    BEGIN           shift and go to state 25
+
+    lista_comandos                 shift and go to state 26
+    lista_comandos_nao_vazia       shift and go to state 27
+    empty                          shift and go to state 28
+    comando                        shift and go to state 29
+    atribuicao                     shift and go to state 30
+    condicional                    shift and go to state 31
+    repeticao                      shift and go to state 32
+    chamada_read                   shift and go to state 33
+    chamada_write                  shift and go to state 34
+    comando_composto               shift and go to state 35
+
+state 15
+
+    (63) parte_comandos -> error . lista_comandos END
+    (15) lista_comandos -> . lista_comandos_nao_vazia
+    (16) lista_comandos -> . empty
+    (17) lista_comandos_nao_vazia -> . lista_comandos_nao_vazia ; comando
+    (18) lista_comandos_nao_vazia -> . comando
+    (65) empty -> .
+    (19) comando -> . atribuicao
+    (20) comando -> . condicional
+    (21) comando -> . repeticao
+    (22) comando -> . chamada_read
+    (23) comando -> . chamada_write
+    (24) comando -> . comando_composto
+    (26) atribuicao -> . ID ATRIBUICAO expressao
+    (27) condicional -> . IF expressao THEN comando else_opcional
+    (30) repeticao -> . WHILE expressao DO comando
+    (31) chamada_read -> . READ ( lista_ids_read )
+    (34) chamada_write -> . WRITE ( lista_exp_write )
+    (35) chamada_write -> . WRITE ( error )
+    (25) comando_composto -> . BEGIN lista_comandos END
+
+    END             reduce using rule 65 (empty -> .)
+    ID              shift and go to state 36
+    IF              shift and go to state 37
+    WHILE           shift and go to state 38
+    READ            shift and go to state 39
+    WRITE           shift and go to state 40
+    BEGIN           shift and go to state 25
+
+    lista_comandos                 shift and go to state 41
+    lista_comandos_nao_vazia       shift and go to state 27
+    empty                          shift and go to state 28
+    comando                        shift and go to state 29
+    atribuicao                     shift and go to state 30
+    condicional                    shift and go to state 31
+    repeticao                      shift and go to state 32
+    chamada_read                   shift and go to state 33
+    chamada_write                  shift and go to state 34
+    comando_composto               shift and go to state 35
+
+state 16
+
+    (4) parte_declaracoes -> VAR lista_declaracoes .
+    (6) lista_declaracoes -> lista_declaracoes . declaracao
+    (8) declaracao -> . lista_ids DOIS_PONTOS tipo ;
+    (9) declaracao -> . error DOIS_PONTOS tipo ;
+    (10) lista_ids -> . lista_ids , ID
+    (11) lista_ids -> . ID
+
+  ! shift/reduce conflict for error resolved as shift
+    BEGIN           reduce using rule 4 (parte_declaracoes -> VAR lista_declaracoes .)
+    error           shift and go to state 19
+    ID              shift and go to state 20
+
+  ! error           [ reduce using rule 4 (parte_declaracoes -> VAR lista_declaracoes .) ]
+
+    declaracao                     shift and go to state 42
+    lista_ids                      shift and go to state 18
+
+state 17
+
+    (7) lista_declaracoes -> declaracao .
+
+    error           reduce using rule 7 (lista_declaracoes -> declaracao .)
+    ID              reduce using rule 7 (lista_declaracoes -> declaracao .)
+    BEGIN           reduce using rule 7 (lista_declaracoes -> declaracao .)
+
+
+state 18
+
+    (8) declaracao -> lista_ids . DOIS_PONTOS tipo ;
+    (10) lista_ids -> lista_ids . , ID
+
+    DOIS_PONTOS     shift and go to state 43
+    ,               shift and go to state 44
+
+
+state 19
+
+    (9) declaracao -> error . DOIS_PONTOS tipo ;
+
+    DOIS_PONTOS     shift and go to state 45
+
+
+state 20
+
+    (11) lista_ids -> ID .
+
+    DOIS_PONTOS     reduce using rule 11 (lista_ids -> ID .)
+    ,               reduce using rule 11 (lista_ids -> ID .)
+    )               reduce using rule 11 (lista_ids -> ID .)
+
+
+state 21
+
+    (2) cabecalho -> PROGRAM ID ; .
+
+    VAR             reduce using rule 2 (cabecalho -> PROGRAM ID ; .)
+    BEGIN           reduce using rule 2 (cabecalho -> PROGRAM ID ; .)
+    error           reduce using rule 2 (cabecalho -> PROGRAM ID ; .)
+
+
+state 22
+
+    (62) cabecalho -> PROGRAM ID error .
+
+    VAR             reduce using rule 62 (cabecalho -> PROGRAM ID error .)
+    BEGIN           reduce using rule 62 (cabecalho -> PROGRAM ID error .)
+    error           reduce using rule 62 (cabecalho -> PROGRAM ID error .)
+
+
+state 23
+
+    (61) cabecalho -> PROGRAM error ; .
+
+    VAR             reduce using rule 61 (cabecalho -> PROGRAM error ; .)
+    BEGIN           reduce using rule 61 (cabecalho -> PROGRAM error ; .)
+    error           reduce using rule 61 (cabecalho -> PROGRAM error ; .)
+
+
+state 24
+
+    (60) cabecalho -> error ID ; .
+
+    VAR             reduce using rule 60 (cabecalho -> error ID ; .)
+    BEGIN           reduce using rule 60 (cabecalho -> error ID ; .)
+    error           reduce using rule 60 (cabecalho -> error ID ; .)
+
+
+state 25
+
+    (25) comando_composto -> BEGIN . lista_comandos END
+    (15) lista_comandos -> . lista_comandos_nao_vazia
+    (16) lista_comandos -> . empty
+    (17) lista_comandos_nao_vazia -> . lista_comandos_nao_vazia ; comando
+    (18) lista_comandos_nao_vazia -> . comando
+    (65) empty -> .
+    (19) comando -> . atribuicao
+    (20) comando -> . condicional
+    (21) comando -> . repeticao
+    (22) comando -> . chamada_read
+    (23) comando -> . chamada_write
+    (24) comando -> . comando_composto
+    (26) atribuicao -> . ID ATRIBUICAO expressao
+    (27) condicional -> . IF expressao THEN comando else_opcional
+    (30) repeticao -> . WHILE expressao DO comando
+    (31) chamada_read -> . READ ( lista_ids_read )
+    (34) chamada_write -> . WRITE ( lista_exp_write )
+    (35) chamada_write -> . WRITE ( error )
+    (25) comando_composto -> . BEGIN lista_comandos END
+
+    END             reduce using rule 65 (empty -> .)
+    ID              shift and go to state 36
+    IF              shift and go to state 37
+    WHILE           shift and go to state 38
+    READ            shift and go to state 39
+    WRITE           shift and go to state 40
+    BEGIN           shift and go to state 25
+
+    lista_comandos                 shift and go to state 46
+    lista_comandos_nao_vazia       shift and go to state 27
+    empty                          shift and go to state 28
+    comando                        shift and go to state 29
+    atribuicao                     shift and go to state 30
+    condicional                    shift and go to state 31
+    repeticao                      shift and go to state 32
+    chamada_read                   shift and go to state 33
+    chamada_write                  shift and go to state 34
+    comando_composto               shift and go to state 35
+
+state 26
+
+    (14) parte_comandos -> BEGIN lista_comandos . END
+    (64) parte_comandos -> BEGIN lista_comandos . error
+
+    END             shift and go to state 47
+    error           shift and go to state 48
+
+
+state 27
+
+    (15) lista_comandos -> lista_comandos_nao_vazia .
+    (17) lista_comandos_nao_vazia -> lista_comandos_nao_vazia . ; comando
+
+    END             reduce using rule 15 (lista_comandos -> lista_comandos_nao_vazia .)
+    error           reduce using rule 15 (lista_comandos -> lista_comandos_nao_vazia .)
+    ;               shift and go to state 49
+
+
+state 28
+
+    (16) lista_comandos -> empty .
+
+    END             reduce using rule 16 (lista_comandos -> empty .)
+    error           reduce using rule 16 (lista_comandos -> empty .)
+
+
+state 29
+
+    (18) lista_comandos_nao_vazia -> comando .
+
+    ;               reduce using rule 18 (lista_comandos_nao_vazia -> comando .)
+    END             reduce using rule 18 (lista_comandos_nao_vazia -> comando .)
+    error           reduce using rule 18 (lista_comandos_nao_vazia -> comando .)
+
+
+state 30
+
+    (19) comando -> atribuicao .
+
+    ;               reduce using rule 19 (comando -> atribuicao .)
+    END             reduce using rule 19 (comando -> atribuicao .)
+    error           reduce using rule 19 (comando -> atribuicao .)
+    ELSE            reduce using rule 19 (comando -> atribuicao .)
+
+
+state 31
+
+    (20) comando -> condicional .
+
+    ;               reduce using rule 20 (comando -> condicional .)
+    END             reduce using rule 20 (comando -> condicional .)
+    error           reduce using rule 20 (comando -> condicional .)
+    ELSE            reduce using rule 20 (comando -> condicional .)
+
+
+state 32
+
+    (21) comando -> repeticao .
+
+    ;               reduce using rule 21 (comando -> repeticao .)
+    END             reduce using rule 21 (comando -> repeticao .)
+    error           reduce using rule 21 (comando -> repeticao .)
+    ELSE            reduce using rule 21 (comando -> repeticao .)
+
+
+state 33
+
+    (22) comando -> chamada_read .
+
+    ;               reduce using rule 22 (comando -> chamada_read .)
+    END             reduce using rule 22 (comando -> chamada_read .)
+    error           reduce using rule 22 (comando -> chamada_read .)
+    ELSE            reduce using rule 22 (comando -> chamada_read .)
+
+
+state 34
+
+    (23) comando -> chamada_write .
+
+    ;               reduce using rule 23 (comando -> chamada_write .)
+    END             reduce using rule 23 (comando -> chamada_write .)
+    error           reduce using rule 23 (comando -> chamada_write .)
+    ELSE            reduce using rule 23 (comando -> chamada_write .)
+
+
+state 35
+
+    (24) comando -> comando_composto .
+
+    ;               reduce using rule 24 (comando -> comando_composto .)
+    END             reduce using rule 24 (comando -> comando_composto .)
+    error           reduce using rule 24 (comando -> comando_composto .)
+    ELSE            reduce using rule 24 (comando -> comando_composto .)
+
+
+state 36
+
+    (26) atribuicao -> ID . ATRIBUICAO expressao
+
+    ATRIBUICAO      shift and go to state 50
+
+
+state 37
+
+    (27) condicional -> IF . expressao THEN comando else_opcional
+    (40) expressao -> . expressao + expressao
+    (41) expressao -> . expressao - expressao
+    (42) expressao -> . expressao * expressao
+    (43) expressao -> . expressao DIV expressao
+    (44) expressao -> . expressao OR expressao
+    (45) expressao -> . expressao AND expressao
+    (46) expressao -> . expressao = expressao
+    (47) expressao -> . expressao DIFERENTE expressao
+    (48) expressao -> . expressao MENOR expressao
+    (49) expressao -> . expressao MENOR_IGUAL expressao
+    (50) expressao -> . expressao MAIOR expressao
+    (51) expressao -> . expressao MAIOR_IGUAL expressao
+    (52) expressao -> . NOT expressao
+    (53) expressao -> . - expressao
+    (54) expressao -> . ( expressao )
+    (55) expressao -> . fator
+    (56) fator -> . ID
+    (57) fator -> . NUM
+    (58) fator -> . TRUE
+    (59) fator -> . FALSE
+
+    NOT             shift and go to state 53
+    -               shift and go to state 52
+    (               shift and go to state 54
+    ID              shift and go to state 56
+    NUM             shift and go to state 57
+    TRUE            shift and go to state 58
+    FALSE           shift and go to state 59
+
+    expressao                      shift and go to state 51
+    fator                          shift and go to state 55
+
+state 38
+
+    (30) repeticao -> WHILE . expressao DO comando
+    (40) expressao -> . expressao + expressao
+    (41) expressao -> . expressao - expressao
+    (42) expressao -> . expressao * expressao
+    (43) expressao -> . expressao DIV expressao
+    (44) expressao -> . expressao OR expressao
+    (45) expressao -> . expressao AND expressao
+    (46) expressao -> . expressao = expressao
+    (47) expressao -> . expressao DIFERENTE expressao
+    (48) expressao -> . expressao MENOR expressao
+    (49) expressao -> . expressao MENOR_IGUAL expressao
+    (50) expressao -> . expressao MAIOR expressao
+    (51) expressao -> . expressao MAIOR_IGUAL expressao
+    (52) expressao -> . NOT expressao
+    (53) expressao -> . - expressao
+    (54) expressao -> . ( expressao )
+    (55) expressao -> . fator
+    (56) fator -> . ID
+    (57) fator -> . NUM
+    (58) fator -> . TRUE
+    (59) fator -> . FALSE
+
+    NOT             shift and go to state 53
+    -               shift and go to state 52
+    (               shift and go to state 54
+    ID              shift and go to state 56
+    NUM             shift and go to state 57
+    TRUE            shift and go to state 58
+    FALSE           shift and go to state 59
+
+    expressao                      shift and go to state 60
+    fator                          shift and go to state 55
+
+state 39
+
+    (31) chamada_read -> READ . ( lista_ids_read )
+
+    (               shift and go to state 61
+
+
+state 40
+
+    (34) chamada_write -> WRITE . ( lista_exp_write )
+    (35) chamada_write -> WRITE . ( error )
+
+    (               shift and go to state 62
+
+
+state 41
+
+    (63) parte_comandos -> error lista_comandos . END
+
+    END             shift and go to state 63
+
+
+state 42
+
+    (6) lista_declaracoes -> lista_declaracoes declaracao .
+
+    error           reduce using rule 6 (lista_declaracoes -> lista_declaracoes declaracao .)
+    ID              reduce using rule 6 (lista_declaracoes -> lista_declaracoes declaracao .)
+    BEGIN           reduce using rule 6 (lista_declaracoes -> lista_declaracoes declaracao .)
+
+
+state 43
+
+    (8) declaracao -> lista_ids DOIS_PONTOS . tipo ;
+    (12) tipo -> . INTEGER
+    (13) tipo -> . BOOLEAN
+
+    INTEGER         shift and go to state 65
+    BOOLEAN         shift and go to state 66
+
+    tipo                           shift and go to state 64
+
+state 44
+
+    (10) lista_ids -> lista_ids , . ID
+
+    ID              shift and go to state 67
+
+
+state 45
+
+    (9) declaracao -> error DOIS_PONTOS . tipo ;
+    (12) tipo -> . INTEGER
+    (13) tipo -> . BOOLEAN
+
+    INTEGER         shift and go to state 65
+    BOOLEAN         shift and go to state 66
+
+    tipo                           shift and go to state 68
+
+state 46
+
+    (25) comando_composto -> BEGIN lista_comandos . END
+
+    END             shift and go to state 69
+
+
+state 47
+
+    (14) parte_comandos -> BEGIN lista_comandos END .
+
+    .               reduce using rule 14 (parte_comandos -> BEGIN lista_comandos END .)
+
+
+state 48
+
+    (64) parte_comandos -> BEGIN lista_comandos error .
+
+    .               reduce using rule 64 (parte_comandos -> BEGIN lista_comandos error .)
+
+
+state 49
+
+    (17) lista_comandos_nao_vazia -> lista_comandos_nao_vazia ; . comando
+    (19) comando -> . atribuicao
+    (20) comando -> . condicional
+    (21) comando -> . repeticao
+    (22) comando -> . chamada_read
+    (23) comando -> . chamada_write
+    (24) comando -> . comando_composto
+    (26) atribuicao -> . ID ATRIBUICAO expressao
+    (27) condicional -> . IF expressao THEN comando else_opcional
+    (30) repeticao -> . WHILE expressao DO comando
+    (31) chamada_read -> . READ ( lista_ids_read )
+    (34) chamada_write -> . WRITE ( lista_exp_write )
+    (35) chamada_write -> . WRITE ( error )
+    (25) comando_composto -> . BEGIN lista_comandos END
+
+    ID              shift and go to state 36
+    IF              shift and go to state 37
+    WHILE           shift and go to state 38
+    READ            shift and go to state 39
+    WRITE           shift and go to state 40
+    BEGIN           shift and go to state 25
+
+    comando                        shift and go to state 70
+    atribuicao                     shift and go to state 30
+    condicional                    shift and go to state 31
+    repeticao                      shift and go to state 32
+    chamada_read                   shift and go to state 33
+    chamada_write                  shift and go to state 34
+    comando_composto               shift and go to state 35
+
+state 50
+
+    (26) atribuicao -> ID ATRIBUICAO . expressao
+    (40) expressao -> . expressao + expressao
+    (41) expressao -> . expressao - expressao
+    (42) expressao -> . expressao * expressao
+    (43) expressao -> . expressao DIV expressao
+    (44) expressao -> . expressao OR expressao
+    (45) expressao -> . expressao AND expressao
+    (46) expressao -> . expressao = expressao
+    (47) expressao -> . expressao DIFERENTE expressao
+    (48) expressao -> . expressao MENOR expressao
+    (49) expressao -> . expressao MENOR_IGUAL expressao
+    (50) expressao -> . expressao MAIOR expressao
+    (51) expressao -> . expressao MAIOR_IGUAL expressao
+    (52) expressao -> . NOT expressao
+    (53) expressao -> . - expressao
+    (54) expressao -> . ( expressao )
+    (55) expressao -> . fator
+    (56) fator -> . ID
+    (57) fator -> . NUM
+    (58) fator -> . TRUE
+    (59) fator -> . FALSE
+
+    NOT             shift and go to state 53
+    -               shift and go to state 52
+    (               shift and go to state 54
+    ID              shift and go to state 56
+    NUM             shift and go to state 57
+    TRUE            shift and go to state 58
+    FALSE           shift and go to state 59
+
+    expressao                      shift and go to state 71
+    fator                          shift and go to state 55
+
+state 51
+
+    (27) condicional -> IF expressao . THEN comando else_opcional
+    (40) expressao -> expressao . + expressao
+    (41) expressao -> expressao . - expressao
+    (42) expressao -> expressao . * expressao
+    (43) expressao -> expressao . DIV expressao
+    (44) expressao -> expressao . OR expressao
+    (45) expressao -> expressao . AND expressao
+    (46) expressao -> expressao . = expressao
+    (47) expressao -> expressao . DIFERENTE expressao
+    (48) expressao -> expressao . MENOR expressao
+    (49) expressao -> expressao . MENOR_IGUAL expressao
+    (50) expressao -> expressao . MAIOR expressao
+    (51) expressao -> expressao . MAIOR_IGUAL expressao
+
+    THEN            shift and go to state 72
+    +               shift and go to state 73
+    -               shift and go to state 74
+    *               shift and go to state 75
+    DIV             shift and go to state 76
+    OR              shift and go to state 77
+    AND             shift and go to state 78
+    =               shift and go to state 79
+    DIFERENTE       shift and go to state 80
+    MENOR           shift and go to state 81
+    MENOR_IGUAL     shift and go to state 82
+    MAIOR           shift and go to state 83
+    MAIOR_IGUAL     shift and go to state 84
+
+
+state 52
+
+    (53) expressao -> - . expressao
+    (40) expressao -> . expressao + expressao
+    (41) expressao -> . expressao - expressao
+    (42) expressao -> . expressao * expressao
+    (43) expressao -> . expressao DIV expressao
+    (44) expressao -> . expressao OR expressao
+    (45) expressao -> . expressao AND expressao
+    (46) expressao -> . expressao = expressao
+    (47) expressao -> . expressao DIFERENTE expressao
+    (48) expressao -> . expressao MENOR expressao
+    (49) expressao -> . expressao MENOR_IGUAL expressao
+    (50) expressao -> . expressao MAIOR expressao
+    (51) expressao -> . expressao MAIOR_IGUAL expressao
+    (52) expressao -> . NOT expressao
+    (53) expressao -> . - expressao
+    (54) expressao -> . ( expressao )
+    (55) expressao -> . fator
+    (56) fator -> . ID
+    (57) fator -> . NUM
+    (58) fator -> . TRUE
+    (59) fator -> . FALSE
+
+    NOT             shift and go to state 53
+    -               shift and go to state 52
+    (               shift and go to state 54
+    ID              shift and go to state 56
+    NUM             shift and go to state 57
+    TRUE            shift and go to state 58
+    FALSE           shift and go to state 59
+
+    expressao                      shift and go to state 85
+    fator                          shift and go to state 55
+
+state 53
+
+    (52) expressao -> NOT . expressao
+    (40) expressao -> . expressao + expressao
+    (41) expressao -> . expressao - expressao
+    (42) expressao -> . expressao * expressao
+    (43) expressao -> . expressao DIV expressao
+    (44) expressao -> . expressao OR expressao
+    (45) expressao -> . expressao AND expressao
+    (46) expressao -> . expressao = expressao
+    (47) expressao -> . expressao DIFERENTE expressao
+    (48) expressao -> . expressao MENOR expressao
+    (49) expressao -> . expressao MENOR_IGUAL expressao
+    (50) expressao -> . expressao MAIOR expressao
+    (51) expressao -> . expressao MAIOR_IGUAL expressao
+    (52) expressao -> . NOT expressao
+    (53) expressao -> . - expressao
+    (54) expressao -> . ( expressao )
+    (55) expressao -> . fator
+    (56) fator -> . ID
+    (57) fator -> . NUM
+    (58) fator -> . TRUE
+    (59) fator -> . FALSE
+
+    NOT             shift and go to state 53
+    -               shift and go to state 52
+    (               shift and go to state 54
+    ID              shift and go to state 56
+    NUM             shift and go to state 57
+    TRUE            shift and go to state 58
+    FALSE           shift and go to state 59
+
+    expressao                      shift and go to state 86
+    fator                          shift and go to state 55
+
+state 54
+
+    (54) expressao -> ( . expressao )
+    (40) expressao -> . expressao + expressao
+    (41) expressao -> . expressao - expressao
+    (42) expressao -> . expressao * expressao
+    (43) expressao -> . expressao DIV expressao
+    (44) expressao -> . expressao OR expressao
+    (45) expressao -> . expressao AND expressao
+    (46) expressao -> . expressao = expressao
+    (47) expressao -> . expressao DIFERENTE expressao
+    (48) expressao -> . expressao MENOR expressao
+    (49) expressao -> . expressao MENOR_IGUAL expressao
+    (50) expressao -> . expressao MAIOR expressao
+    (51) expressao -> . expressao MAIOR_IGUAL expressao
+    (52) expressao -> . NOT expressao
+    (53) expressao -> . - expressao
+    (54) expressao -> . ( expressao )
+    (55) expressao -> . fator
+    (56) fator -> . ID
+    (57) fator -> . NUM
+    (58) fator -> . TRUE
+    (59) fator -> . FALSE
+
+    NOT             shift and go to state 53
+    -               shift and go to state 52
+    (               shift and go to state 54
+    ID              shift and go to state 56
+    NUM             shift and go to state 57
+    TRUE            shift and go to state 58
+    FALSE           shift and go to state 59
+
+    expressao                      shift and go to state 87
+    fator                          shift and go to state 55
+
+state 55
+
+    (55) expressao -> fator .
+
+    THEN            reduce using rule 55 (expressao -> fator .)
+    +               reduce using rule 55 (expressao -> fator .)
+    -               reduce using rule 55 (expressao -> fator .)
+    *               reduce using rule 55 (expressao -> fator .)
+    DIV             reduce using rule 55 (expressao -> fator .)
+    OR              reduce using rule 55 (expressao -> fator .)
+    AND             reduce using rule 55 (expressao -> fator .)
+    =               reduce using rule 55 (expressao -> fator .)
+    DIFERENTE       reduce using rule 55 (expressao -> fator .)
+    MENOR           reduce using rule 55 (expressao -> fator .)
+    MENOR_IGUAL     reduce using rule 55 (expressao -> fator .)
+    MAIOR           reduce using rule 55 (expressao -> fator .)
+    MAIOR_IGUAL     reduce using rule 55 (expressao -> fator .)
+    DO              reduce using rule 55 (expressao -> fator .)
+    ;               reduce using rule 55 (expressao -> fator .)
+    END             reduce using rule 55 (expressao -> fator .)
+    error           reduce using rule 55 (expressao -> fator .)
+    ELSE            reduce using rule 55 (expressao -> fator .)
+    )               reduce using rule 55 (expressao -> fator .)
+    ,               reduce using rule 55 (expressao -> fator .)
+
+
+state 56
+
+    (56) fator -> ID .
+
+    THEN            reduce using rule 56 (fator -> ID .)
+    +               reduce using rule 56 (fator -> ID .)
+    -               reduce using rule 56 (fator -> ID .)
+    *               reduce using rule 56 (fator -> ID .)
+    DIV             reduce using rule 56 (fator -> ID .)
+    OR              reduce using rule 56 (fator -> ID .)
+    AND             reduce using rule 56 (fator -> ID .)
+    =               reduce using rule 56 (fator -> ID .)
+    DIFERENTE       reduce using rule 56 (fator -> ID .)
+    MENOR           reduce using rule 56 (fator -> ID .)
+    MENOR_IGUAL     reduce using rule 56 (fator -> ID .)
+    MAIOR           reduce using rule 56 (fator -> ID .)
+    MAIOR_IGUAL     reduce using rule 56 (fator -> ID .)
+    DO              reduce using rule 56 (fator -> ID .)
+    ;               reduce using rule 56 (fator -> ID .)
+    END             reduce using rule 56 (fator -> ID .)
+    error           reduce using rule 56 (fator -> ID .)
+    ELSE            reduce using rule 56 (fator -> ID .)
+    )               reduce using rule 56 (fator -> ID .)
+    ,               reduce using rule 56 (fator -> ID .)
+
+
+state 57
+
+    (57) fator -> NUM .
+
+    THEN            reduce using rule 57 (fator -> NUM .)
+    +               reduce using rule 57 (fator -> NUM .)
+    -               reduce using rule 57 (fator -> NUM .)
+    *               reduce using rule 57 (fator -> NUM .)
+    DIV             reduce using rule 57 (fator -> NUM .)
+    OR              reduce using rule 57 (fator -> NUM .)
+    AND             reduce using rule 57 (fator -> NUM .)
+    =               reduce using rule 57 (fator -> NUM .)
+    DIFERENTE       reduce using rule 57 (fator -> NUM .)
+    MENOR           reduce using rule 57 (fator -> NUM .)
+    MENOR_IGUAL     reduce using rule 57 (fator -> NUM .)
+    MAIOR           reduce using rule 57 (fator -> NUM .)
+    MAIOR_IGUAL     reduce using rule 57 (fator -> NUM .)
+    DO              reduce using rule 57 (fator -> NUM .)
+    ;               reduce using rule 57 (fator -> NUM .)
+    END             reduce using rule 57 (fator -> NUM .)
+    error           reduce using rule 57 (fator -> NUM .)
+    ELSE            reduce using rule 57 (fator -> NUM .)
+    )               reduce using rule 57 (fator -> NUM .)
+    ,               reduce using rule 57 (fator -> NUM .)
+
+
+state 58
+
+    (58) fator -> TRUE .
+
+    THEN            reduce using rule 58 (fator -> TRUE .)
+    +               reduce using rule 58 (fator -> TRUE .)
+    -               reduce using rule 58 (fator -> TRUE .)
+    *               reduce using rule 58 (fator -> TRUE .)
+    DIV             reduce using rule 58 (fator -> TRUE .)
+    OR              reduce using rule 58 (fator -> TRUE .)
+    AND             reduce using rule 58 (fator -> TRUE .)
+    =               reduce using rule 58 (fator -> TRUE .)
+    DIFERENTE       reduce using rule 58 (fator -> TRUE .)
+    MENOR           reduce using rule 58 (fator -> TRUE .)
+    MENOR_IGUAL     reduce using rule 58 (fator -> TRUE .)
+    MAIOR           reduce using rule 58 (fator -> TRUE .)
+    MAIOR_IGUAL     reduce using rule 58 (fator -> TRUE .)
+    DO              reduce using rule 58 (fator -> TRUE .)
+    ;               reduce using rule 58 (fator -> TRUE .)
+    END             reduce using rule 58 (fator -> TRUE .)
+    error           reduce using rule 58 (fator -> TRUE .)
+    ELSE            reduce using rule 58 (fator -> TRUE .)
+    )               reduce using rule 58 (fator -> TRUE .)
+    ,               reduce using rule 58 (fator -> TRUE .)
+
+
+state 59
+
+    (59) fator -> FALSE .
+
+    THEN            reduce using rule 59 (fator -> FALSE .)
+    +               reduce using rule 59 (fator -> FALSE .)
+    -               reduce using rule 59 (fator -> FALSE .)
+    *               reduce using rule 59 (fator -> FALSE .)
+    DIV             reduce using rule 59 (fator -> FALSE .)
+    OR              reduce using rule 59 (fator -> FALSE .)
+    AND             reduce using rule 59 (fator -> FALSE .)
+    =               reduce using rule 59 (fator -> FALSE .)
+    DIFERENTE       reduce using rule 59 (fator -> FALSE .)
+    MENOR           reduce using rule 59 (fator -> FALSE .)
+    MENOR_IGUAL     reduce using rule 59 (fator -> FALSE .)
+    MAIOR           reduce using rule 59 (fator -> FALSE .)
+    MAIOR_IGUAL     reduce using rule 59 (fator -> FALSE .)
+    DO              reduce using rule 59 (fator -> FALSE .)
+    ;               reduce using rule 59 (fator -> FALSE .)
+    END             reduce using rule 59 (fator -> FALSE .)
+    error           reduce using rule 59 (fator -> FALSE .)
+    ELSE            reduce using rule 59 (fator -> FALSE .)
+    )               reduce using rule 59 (fator -> FALSE .)
+    ,               reduce using rule 59 (fator -> FALSE .)
+
+
+state 60
+
+    (30) repeticao -> WHILE expressao . DO comando
+    (40) expressao -> expressao . + expressao
+    (41) expressao -> expressao . - expressao
+    (42) expressao -> expressao . * expressao
+    (43) expressao -> expressao . DIV expressao
+    (44) expressao -> expressao . OR expressao
+    (45) expressao -> expressao . AND expressao
+    (46) expressao -> expressao . = expressao
+    (47) expressao -> expressao . DIFERENTE expressao
+    (48) expressao -> expressao . MENOR expressao
+    (49) expressao -> expressao . MENOR_IGUAL expressao
+    (50) expressao -> expressao . MAIOR expressao
+    (51) expressao -> expressao . MAIOR_IGUAL expressao
+
+    DO              shift and go to state 88
+    +               shift and go to state 73
+    -               shift and go to state 74
+    *               shift and go to state 75
+    DIV             shift and go to state 76
+    OR              shift and go to state 77
+    AND             shift and go to state 78
+    =               shift and go to state 79
+    DIFERENTE       shift and go to state 80
+    MENOR           shift and go to state 81
+    MENOR_IGUAL     shift and go to state 82
+    MAIOR           shift and go to state 83
+    MAIOR_IGUAL     shift and go to state 84
+
+
+state 61
+
+    (31) chamada_read -> READ ( . lista_ids_read )
+    (32) lista_ids_read -> . lista_ids
+    (33) lista_ids_read -> . empty
+    (10) lista_ids -> . lista_ids , ID
+    (11) lista_ids -> . ID
+    (65) empty -> .
+
+    ID              shift and go to state 20
+    )               reduce using rule 65 (empty -> .)
+
+    lista_ids_read                 shift and go to state 89
+    lista_ids                      shift and go to state 90
+    empty                          shift and go to state 91
+
+state 62
+
+    (34) chamada_write -> WRITE ( . lista_exp_write )
+    (35) chamada_write -> WRITE ( . error )
+    (36) lista_exp_write -> . lista_expressoes
+    (37) lista_exp_write -> . empty
+    (38) lista_expressoes -> . lista_expressoes , expressao
+    (39) lista_expressoes -> . expressao
+    (65) empty -> .
+    (40) expressao -> . expressao + expressao
+    (41) expressao -> . expressao - expressao
+    (42) expressao -> . expressao * expressao
+    (43) expressao -> . expressao DIV expressao
+    (44) expressao -> . expressao OR expressao
+    (45) expressao -> . expressao AND expressao
+    (46) expressao -> . expressao = expressao
+    (47) expressao -> . expressao DIFERENTE expressao
+    (48) expressao -> . expressao MENOR expressao
+    (49) expressao -> . expressao MENOR_IGUAL expressao
+    (50) expressao -> . expressao MAIOR expressao
+    (51) expressao -> . expressao MAIOR_IGUAL expressao
+    (52) expressao -> . NOT expressao
+    (53) expressao -> . - expressao
+    (54) expressao -> . ( expressao )
+    (55) expressao -> . fator
+    (56) fator -> . ID
+    (57) fator -> . NUM
+    (58) fator -> . TRUE
+    (59) fator -> . FALSE
+
+    error           shift and go to state 93
+    )               reduce using rule 65 (empty -> .)
+    NOT             shift and go to state 53
+    -               shift and go to state 52
+    (               shift and go to state 54
+    ID              shift and go to state 56
+    NUM             shift and go to state 57
+    TRUE            shift and go to state 58
+    FALSE           shift and go to state 59
+
+    lista_exp_write                shift and go to state 92
+    lista_expressoes               shift and go to state 94
+    empty                          shift and go to state 95
+    expressao                      shift and go to state 96
+    fator                          shift and go to state 55
+
+state 63
+
+    (63) parte_comandos -> error lista_comandos END .
+
+    .               reduce using rule 63 (parte_comandos -> error lista_comandos END .)
+
+
+state 64
+
+    (8) declaracao -> lista_ids DOIS_PONTOS tipo . ;
+
+    ;               shift and go to state 97
+
+
+state 65
+
+    (12) tipo -> INTEGER .
+
+    ;               reduce using rule 12 (tipo -> INTEGER .)
+
+
+state 66
+
+    (13) tipo -> BOOLEAN .
+
+    ;               reduce using rule 13 (tipo -> BOOLEAN .)
+
+
+state 67
+
+    (10) lista_ids -> lista_ids , ID .
+
+    DOIS_PONTOS     reduce using rule 10 (lista_ids -> lista_ids , ID .)
+    ,               reduce using rule 10 (lista_ids -> lista_ids , ID .)
+    )               reduce using rule 10 (lista_ids -> lista_ids , ID .)
+
+
+state 68
+
+    (9) declaracao -> error DOIS_PONTOS tipo . ;
+
+    ;               shift and go to state 98
+
+
+state 69
+
+    (25) comando_composto -> BEGIN lista_comandos END .
+
+    ;               reduce using rule 25 (comando_composto -> BEGIN lista_comandos END .)
+    END             reduce using rule 25 (comando_composto -> BEGIN lista_comandos END .)
+    error           reduce using rule 25 (comando_composto -> BEGIN lista_comandos END .)
+    ELSE            reduce using rule 25 (comando_composto -> BEGIN lista_comandos END .)
+
+
+state 70
+
+    (17) lista_comandos_nao_vazia -> lista_comandos_nao_vazia ; comando .
+
+    ;               reduce using rule 17 (lista_comandos_nao_vazia -> lista_comandos_nao_vazia ; comando .)
+    END             reduce using rule 17 (lista_comandos_nao_vazia -> lista_comandos_nao_vazia ; comando .)
+    error           reduce using rule 17 (lista_comandos_nao_vazia -> lista_comandos_nao_vazia ; comando .)
+
+
+state 71
+
+    (26) atribuicao -> ID ATRIBUICAO expressao .
+    (40) expressao -> expressao . + expressao
+    (41) expressao -> expressao . - expressao
+    (42) expressao -> expressao . * expressao
+    (43) expressao -> expressao . DIV expressao
+    (44) expressao -> expressao . OR expressao
+    (45) expressao -> expressao . AND expressao
+    (46) expressao -> expressao . = expressao
+    (47) expressao -> expressao . DIFERENTE expressao
+    (48) expressao -> expressao . MENOR expressao
+    (49) expressao -> expressao . MENOR_IGUAL expressao
+    (50) expressao -> expressao . MAIOR expressao
+    (51) expressao -> expressao . MAIOR_IGUAL expressao
+
+    ;               reduce using rule 26 (atribuicao -> ID ATRIBUICAO expressao .)
+    END             reduce using rule 26 (atribuicao -> ID ATRIBUICAO expressao .)
+    error           reduce using rule 26 (atribuicao -> ID ATRIBUICAO expressao .)
+    ELSE            reduce using rule 26 (atribuicao -> ID ATRIBUICAO expressao .)
+    +               shift and go to state 73
+    -               shift and go to state 74
+    *               shift and go to state 75
+    DIV             shift and go to state 76
+    OR              shift and go to state 77
+    AND             shift and go to state 78
+    =               shift and go to state 79
+    DIFERENTE       shift and go to state 80
+    MENOR           shift and go to state 81
+    MENOR_IGUAL     shift and go to state 82
+    MAIOR           shift and go to state 83
+    MAIOR_IGUAL     shift and go to state 84
+
+
+state 72
+
+    (27) condicional -> IF expressao THEN . comando else_opcional
+    (19) comando -> . atribuicao
+    (20) comando -> . condicional
+    (21) comando -> . repeticao
+    (22) comando -> . chamada_read
+    (23) comando -> . chamada_write
+    (24) comando -> . comando_composto
+    (26) atribuicao -> . ID ATRIBUICAO expressao
+    (27) condicional -> . IF expressao THEN comando else_opcional
+    (30) repeticao -> . WHILE expressao DO comando
+    (31) chamada_read -> . READ ( lista_ids_read )
+    (34) chamada_write -> . WRITE ( lista_exp_write )
+    (35) chamada_write -> . WRITE ( error )
+    (25) comando_composto -> . BEGIN lista_comandos END
+
+    ID              shift and go to state 36
+    IF              shift and go to state 37
+    WHILE           shift and go to state 38
+    READ            shift and go to state 39
+    WRITE           shift and go to state 40
+    BEGIN           shift and go to state 25
+
+    comando                        shift and go to state 99
+    atribuicao                     shift and go to state 30
+    condicional                    shift and go to state 31
+    repeticao                      shift and go to state 32
+    chamada_read                   shift and go to state 33
+    chamada_write                  shift and go to state 34
+    comando_composto               shift and go to state 35
+
+state 73
+
+    (40) expressao -> expressao + . expressao
+    (40) expressao -> . expressao + expressao
+    (41) expressao -> . expressao - expressao
+    (42) expressao -> . expressao * expressao
+    (43) expressao -> . expressao DIV expressao
+    (44) expressao -> . expressao OR expressao
+    (45) expressao -> . expressao AND expressao
+    (46) expressao -> . expressao = expressao
+    (47) expressao -> . expressao DIFERENTE expressao
+    (48) expressao -> . expressao MENOR expressao
+    (49) expressao -> . expressao MENOR_IGUAL expressao
+    (50) expressao -> . expressao MAIOR expressao
+    (51) expressao -> . expressao MAIOR_IGUAL expressao
+    (52) expressao -> . NOT expressao
+    (53) expressao -> . - expressao
+    (54) expressao -> . ( expressao )
+    (55) expressao -> . fator
+    (56) fator -> . ID
+    (57) fator -> . NUM
+    (58) fator -> . TRUE
+    (59) fator -> . FALSE
+
+    NOT             shift and go to state 53
+    -               shift and go to state 52
+    (               shift and go to state 54
+    ID              shift and go to state 56
+    NUM             shift and go to state 57
+    TRUE            shift and go to state 58
+    FALSE           shift and go to state 59
+
+    expressao                      shift and go to state 100
+    fator                          shift and go to state 55
+
+state 74
+
+    (41) expressao -> expressao - . expressao
+    (40) expressao -> . expressao + expressao
+    (41) expressao -> . expressao - expressao
+    (42) expressao -> . expressao * expressao
+    (43) expressao -> . expressao DIV expressao
+    (44) expressao -> . expressao OR expressao
+    (45) expressao -> . expressao AND expressao
+    (46) expressao -> . expressao = expressao
+    (47) expressao -> . expressao DIFERENTE expressao
+    (48) expressao -> . expressao MENOR expressao
+    (49) expressao -> . expressao MENOR_IGUAL expressao
+    (50) expressao -> . expressao MAIOR expressao
+    (51) expressao -> . expressao MAIOR_IGUAL expressao
+    (52) expressao -> . NOT expressao
+    (53) expressao -> . - expressao
+    (54) expressao -> . ( expressao )
+    (55) expressao -> . fator
+    (56) fator -> . ID
+    (57) fator -> . NUM
+    (58) fator -> . TRUE
+    (59) fator -> . FALSE
+
+    NOT             shift and go to state 53
+    -               shift and go to state 52
+    (               shift and go to state 54
+    ID              shift and go to state 56
+    NUM             shift and go to state 57
+    TRUE            shift and go to state 58
+    FALSE           shift and go to state 59
+
+    expressao                      shift and go to state 101
+    fator                          shift and go to state 55
+
+state 75
+
+    (42) expressao -> expressao * . expressao
+    (40) expressao -> . expressao + expressao
+    (41) expressao -> . expressao - expressao
+    (42) expressao -> . expressao * expressao
+    (43) expressao -> . expressao DIV expressao
+    (44) expressao -> . expressao OR expressao
+    (45) expressao -> . expressao AND expressao
+    (46) expressao -> . expressao = expressao
+    (47) expressao -> . expressao DIFERENTE expressao
+    (48) expressao -> . expressao MENOR expressao
+    (49) expressao -> . expressao MENOR_IGUAL expressao
+    (50) expressao -> . expressao MAIOR expressao
+    (51) expressao -> . expressao MAIOR_IGUAL expressao
+    (52) expressao -> . NOT expressao
+    (53) expressao -> . - expressao
+    (54) expressao -> . ( expressao )
+    (55) expressao -> . fator
+    (56) fator -> . ID
+    (57) fator -> . NUM
+    (58) fator -> . TRUE
+    (59) fator -> . FALSE
+
+    NOT             shift and go to state 53
+    -               shift and go to state 52
+    (               shift and go to state 54
+    ID              shift and go to state 56
+    NUM             shift and go to state 57
+    TRUE            shift and go to state 58
+    FALSE           shift and go to state 59
+
+    expressao                      shift and go to state 102
+    fator                          shift and go to state 55
+
+state 76
+
+    (43) expressao -> expressao DIV . expressao
+    (40) expressao -> . expressao + expressao
+    (41) expressao -> . expressao - expressao
+    (42) expressao -> . expressao * expressao
+    (43) expressao -> . expressao DIV expressao
+    (44) expressao -> . expressao OR expressao
+    (45) expressao -> . expressao AND expressao
+    (46) expressao -> . expressao = expressao
+    (47) expressao -> . expressao DIFERENTE expressao
+    (48) expressao -> . expressao MENOR expressao
+    (49) expressao -> . expressao MENOR_IGUAL expressao
+    (50) expressao -> . expressao MAIOR expressao
+    (51) expressao -> . expressao MAIOR_IGUAL expressao
+    (52) expressao -> . NOT expressao
+    (53) expressao -> . - expressao
+    (54) expressao -> . ( expressao )
+    (55) expressao -> . fator
+    (56) fator -> . ID
+    (57) fator -> . NUM
+    (58) fator -> . TRUE
+    (59) fator -> . FALSE
+
+    NOT             shift and go to state 53
+    -               shift and go to state 52
+    (               shift and go to state 54
+    ID              shift and go to state 56
+    NUM             shift and go to state 57
+    TRUE            shift and go to state 58
+    FALSE           shift and go to state 59
+
+    expressao                      shift and go to state 103
+    fator                          shift and go to state 55
+
+state 77
+
+    (44) expressao -> expressao OR . expressao
+    (40) expressao -> . expressao + expressao
+    (41) expressao -> . expressao - expressao
+    (42) expressao -> . expressao * expressao
+    (43) expressao -> . expressao DIV expressao
+    (44) expressao -> . expressao OR expressao
+    (45) expressao -> . expressao AND expressao
+    (46) expressao -> . expressao = expressao
+    (47) expressao -> . expressao DIFERENTE expressao
+    (48) expressao -> . expressao MENOR expressao
+    (49) expressao -> . expressao MENOR_IGUAL expressao
+    (50) expressao -> . expressao MAIOR expressao
+    (51) expressao -> . expressao MAIOR_IGUAL expressao
+    (52) expressao -> . NOT expressao
+    (53) expressao -> . - expressao
+    (54) expressao -> . ( expressao )
+    (55) expressao -> . fator
+    (56) fator -> . ID
+    (57) fator -> . NUM
+    (58) fator -> . TRUE
+    (59) fator -> . FALSE
+
+    NOT             shift and go to state 53
+    -               shift and go to state 52
+    (               shift and go to state 54
+    ID              shift and go to state 56
+    NUM             shift and go to state 57
+    TRUE            shift and go to state 58
+    FALSE           shift and go to state 59
+
+    expressao                      shift and go to state 104
+    fator                          shift and go to state 55
+
+state 78
+
+    (45) expressao -> expressao AND . expressao
+    (40) expressao -> . expressao + expressao
+    (41) expressao -> . expressao - expressao
+    (42) expressao -> . expressao * expressao
+    (43) expressao -> . expressao DIV expressao
+    (44) expressao -> . expressao OR expressao
+    (45) expressao -> . expressao AND expressao
+    (46) expressao -> . expressao = expressao
+    (47) expressao -> . expressao DIFERENTE expressao
+    (48) expressao -> . expressao MENOR expressao
+    (49) expressao -> . expressao MENOR_IGUAL expressao
+    (50) expressao -> . expressao MAIOR expressao
+    (51) expressao -> . expressao MAIOR_IGUAL expressao
+    (52) expressao -> . NOT expressao
+    (53) expressao -> . - expressao
+    (54) expressao -> . ( expressao )
+    (55) expressao -> . fator
+    (56) fator -> . ID
+    (57) fator -> . NUM
+    (58) fator -> . TRUE
+    (59) fator -> . FALSE
+
+    NOT             shift and go to state 53
+    -               shift and go to state 52
+    (               shift and go to state 54
+    ID              shift and go to state 56
+    NUM             shift and go to state 57
+    TRUE            shift and go to state 58
+    FALSE           shift and go to state 59
+
+    expressao                      shift and go to state 105
+    fator                          shift and go to state 55
+
+state 79
+
+    (46) expressao -> expressao = . expressao
+    (40) expressao -> . expressao + expressao
+    (41) expressao -> . expressao - expressao
+    (42) expressao -> . expressao * expressao
+    (43) expressao -> . expressao DIV expressao
+    (44) expressao -> . expressao OR expressao
+    (45) expressao -> . expressao AND expressao
+    (46) expressao -> . expressao = expressao
+    (47) expressao -> . expressao DIFERENTE expressao
+    (48) expressao -> . expressao MENOR expressao
+    (49) expressao -> . expressao MENOR_IGUAL expressao
+    (50) expressao -> . expressao MAIOR expressao
+    (51) expressao -> . expressao MAIOR_IGUAL expressao
+    (52) expressao -> . NOT expressao
+    (53) expressao -> . - expressao
+    (54) expressao -> . ( expressao )
+    (55) expressao -> . fator
+    (56) fator -> . ID
+    (57) fator -> . NUM
+    (58) fator -> . TRUE
+    (59) fator -> . FALSE
+
+    NOT             shift and go to state 53
+    -               shift and go to state 52
+    (               shift and go to state 54
+    ID              shift and go to state 56
+    NUM             shift and go to state 57
+    TRUE            shift and go to state 58
+    FALSE           shift and go to state 59
+
+    expressao                      shift and go to state 106
+    fator                          shift and go to state 55
+
+state 80
+
+    (47) expressao -> expressao DIFERENTE . expressao
+    (40) expressao -> . expressao + expressao
+    (41) expressao -> . expressao - expressao
+    (42) expressao -> . expressao * expressao
+    (43) expressao -> . expressao DIV expressao
+    (44) expressao -> . expressao OR expressao
+    (45) expressao -> . expressao AND expressao
+    (46) expressao -> . expressao = expressao
+    (47) expressao -> . expressao DIFERENTE expressao
+    (48) expressao -> . expressao MENOR expressao
+    (49) expressao -> . expressao MENOR_IGUAL expressao
+    (50) expressao -> . expressao MAIOR expressao
+    (51) expressao -> . expressao MAIOR_IGUAL expressao
+    (52) expressao -> . NOT expressao
+    (53) expressao -> . - expressao
+    (54) expressao -> . ( expressao )
+    (55) expressao -> . fator
+    (56) fator -> . ID
+    (57) fator -> . NUM
+    (58) fator -> . TRUE
+    (59) fator -> . FALSE
+
+    NOT             shift and go to state 53
+    -               shift and go to state 52
+    (               shift and go to state 54
+    ID              shift and go to state 56
+    NUM             shift and go to state 57
+    TRUE            shift and go to state 58
+    FALSE           shift and go to state 59
+
+    expressao                      shift and go to state 107
+    fator                          shift and go to state 55
+
+state 81
+
+    (48) expressao -> expressao MENOR . expressao
+    (40) expressao -> . expressao + expressao
+    (41) expressao -> . expressao - expressao
+    (42) expressao -> . expressao * expressao
+    (43) expressao -> . expressao DIV expressao
+    (44) expressao -> . expressao OR expressao
+    (45) expressao -> . expressao AND expressao
+    (46) expressao -> . expressao = expressao
+    (47) expressao -> . expressao DIFERENTE expressao
+    (48) expressao -> . expressao MENOR expressao
+    (49) expressao -> . expressao MENOR_IGUAL expressao
+    (50) expressao -> . expressao MAIOR expressao
+    (51) expressao -> . expressao MAIOR_IGUAL expressao
+    (52) expressao -> . NOT expressao
+    (53) expressao -> . - expressao
+    (54) expressao -> . ( expressao )
+    (55) expressao -> . fator
+    (56) fator -> . ID
+    (57) fator -> . NUM
+    (58) fator -> . TRUE
+    (59) fator -> . FALSE
+
+    NOT             shift and go to state 53
+    -               shift and go to state 52
+    (               shift and go to state 54
+    ID              shift and go to state 56
+    NUM             shift and go to state 57
+    TRUE            shift and go to state 58
+    FALSE           shift and go to state 59
+
+    expressao                      shift and go to state 108
+    fator                          shift and go to state 55
+
+state 82
+
+    (49) expressao -> expressao MENOR_IGUAL . expressao
+    (40) expressao -> . expressao + expressao
+    (41) expressao -> . expressao - expressao
+    (42) expressao -> . expressao * expressao
+    (43) expressao -> . expressao DIV expressao
+    (44) expressao -> . expressao OR expressao
+    (45) expressao -> . expressao AND expressao
+    (46) expressao -> . expressao = expressao
+    (47) expressao -> . expressao DIFERENTE expressao
+    (48) expressao -> . expressao MENOR expressao
+    (49) expressao -> . expressao MENOR_IGUAL expressao
+    (50) expressao -> . expressao MAIOR expressao
+    (51) expressao -> . expressao MAIOR_IGUAL expressao
+    (52) expressao -> . NOT expressao
+    (53) expressao -> . - expressao
+    (54) expressao -> . ( expressao )
+    (55) expressao -> . fator
+    (56) fator -> . ID
+    (57) fator -> . NUM
+    (58) fator -> . TRUE
+    (59) fator -> . FALSE
+
+    NOT             shift and go to state 53
+    -               shift and go to state 52
+    (               shift and go to state 54
+    ID              shift and go to state 56
+    NUM             shift and go to state 57
+    TRUE            shift and go to state 58
+    FALSE           shift and go to state 59
+
+    expressao                      shift and go to state 109
+    fator                          shift and go to state 55
+
+state 83
+
+    (50) expressao -> expressao MAIOR . expressao
+    (40) expressao -> . expressao + expressao
+    (41) expressao -> . expressao - expressao
+    (42) expressao -> . expressao * expressao
+    (43) expressao -> . expressao DIV expressao
+    (44) expressao -> . expressao OR expressao
+    (45) expressao -> . expressao AND expressao
+    (46) expressao -> . expressao = expressao
+    (47) expressao -> . expressao DIFERENTE expressao
+    (48) expressao -> . expressao MENOR expressao
+    (49) expressao -> . expressao MENOR_IGUAL expressao
+    (50) expressao -> . expressao MAIOR expressao
+    (51) expressao -> . expressao MAIOR_IGUAL expressao
+    (52) expressao -> . NOT expressao
+    (53) expressao -> . - expressao
+    (54) expressao -> . ( expressao )
+    (55) expressao -> . fator
+    (56) fator -> . ID
+    (57) fator -> . NUM
+    (58) fator -> . TRUE
+    (59) fator -> . FALSE
+
+    NOT             shift and go to state 53
+    -               shift and go to state 52
+    (               shift and go to state 54
+    ID              shift and go to state 56
+    NUM             shift and go to state 57
+    TRUE            shift and go to state 58
+    FALSE           shift and go to state 59
+
+    expressao                      shift and go to state 110
+    fator                          shift and go to state 55
+
+state 84
+
+    (51) expressao -> expressao MAIOR_IGUAL . expressao
+    (40) expressao -> . expressao + expressao
+    (41) expressao -> . expressao - expressao
+    (42) expressao -> . expressao * expressao
+    (43) expressao -> . expressao DIV expressao
+    (44) expressao -> . expressao OR expressao
+    (45) expressao -> . expressao AND expressao
+    (46) expressao -> . expressao = expressao
+    (47) expressao -> . expressao DIFERENTE expressao
+    (48) expressao -> . expressao MENOR expressao
+    (49) expressao -> . expressao MENOR_IGUAL expressao
+    (50) expressao -> . expressao MAIOR expressao
+    (51) expressao -> . expressao MAIOR_IGUAL expressao
+    (52) expressao -> . NOT expressao
+    (53) expressao -> . - expressao
+    (54) expressao -> . ( expressao )
+    (55) expressao -> . fator
+    (56) fator -> . ID
+    (57) fator -> . NUM
+    (58) fator -> . TRUE
+    (59) fator -> . FALSE
+
+    NOT             shift and go to state 53
+    -               shift and go to state 52
+    (               shift and go to state 54
+    ID              shift and go to state 56
+    NUM             shift and go to state 57
+    TRUE            shift and go to state 58
+    FALSE           shift and go to state 59
+
+    expressao                      shift and go to state 111
+    fator                          shift and go to state 55
+
+state 85
+
+    (53) expressao -> - expressao .
+    (40) expressao -> expressao . + expressao
+    (41) expressao -> expressao . - expressao
+    (42) expressao -> expressao . * expressao
+    (43) expressao -> expressao . DIV expressao
+    (44) expressao -> expressao . OR expressao
+    (45) expressao -> expressao . AND expressao
+    (46) expressao -> expressao . = expressao
+    (47) expressao -> expressao . DIFERENTE expressao
+    (48) expressao -> expressao . MENOR expressao
+    (49) expressao -> expressao . MENOR_IGUAL expressao
+    (50) expressao -> expressao . MAIOR expressao
+    (51) expressao -> expressao . MAIOR_IGUAL expressao
+
+    THEN            reduce using rule 53 (expressao -> - expressao .)
+    +               reduce using rule 53 (expressao -> - expressao .)
+    -               reduce using rule 53 (expressao -> - expressao .)
+    *               reduce using rule 53 (expressao -> - expressao .)
+    DIV             reduce using rule 53 (expressao -> - expressao .)
+    OR              reduce using rule 53 (expressao -> - expressao .)
+    AND             reduce using rule 53 (expressao -> - expressao .)
+    =               reduce using rule 53 (expressao -> - expressao .)
+    DIFERENTE       reduce using rule 53 (expressao -> - expressao .)
+    MENOR           reduce using rule 53 (expressao -> - expressao .)
+    MENOR_IGUAL     reduce using rule 53 (expressao -> - expressao .)
+    MAIOR           reduce using rule 53 (expressao -> - expressao .)
+    MAIOR_IGUAL     reduce using rule 53 (expressao -> - expressao .)
+    DO              reduce using rule 53 (expressao -> - expressao .)
+    ;               reduce using rule 53 (expressao -> - expressao .)
+    END             reduce using rule 53 (expressao -> - expressao .)
+    error           reduce using rule 53 (expressao -> - expressao .)
+    ELSE            reduce using rule 53 (expressao -> - expressao .)
+    )               reduce using rule 53 (expressao -> - expressao .)
+    ,               reduce using rule 53 (expressao -> - expressao .)
+
+  ! +               [ shift and go to state 73 ]
+  ! -               [ shift and go to state 74 ]
+  ! *               [ shift and go to state 75 ]
+  ! DIV             [ shift and go to state 76 ]
+  ! OR              [ shift and go to state 77 ]
+  ! AND             [ shift and go to state 78 ]
+  ! =               [ shift and go to state 79 ]
+  ! DIFERENTE       [ shift and go to state 80 ]
+  ! MENOR           [ shift and go to state 81 ]
+  ! MENOR_IGUAL     [ shift and go to state 82 ]
+  ! MAIOR           [ shift and go to state 83 ]
+  ! MAIOR_IGUAL     [ shift and go to state 84 ]
+
+
+state 86
+
+    (52) expressao -> NOT expressao .
+    (40) expressao -> expressao . + expressao
+    (41) expressao -> expressao . - expressao
+    (42) expressao -> expressao . * expressao
+    (43) expressao -> expressao . DIV expressao
+    (44) expressao -> expressao . OR expressao
+    (45) expressao -> expressao . AND expressao
+    (46) expressao -> expressao . = expressao
+    (47) expressao -> expressao . DIFERENTE expressao
+    (48) expressao -> expressao . MENOR expressao
+    (49) expressao -> expressao . MENOR_IGUAL expressao
+    (50) expressao -> expressao . MAIOR expressao
+    (51) expressao -> expressao . MAIOR_IGUAL expressao
+
+    THEN            reduce using rule 52 (expressao -> NOT expressao .)
+    OR              reduce using rule 52 (expressao -> NOT expressao .)
+    AND             reduce using rule 52 (expressao -> NOT expressao .)
+    DO              reduce using rule 52 (expressao -> NOT expressao .)
+    ;               reduce using rule 52 (expressao -> NOT expressao .)
+    END             reduce using rule 52 (expressao -> NOT expressao .)
+    error           reduce using rule 52 (expressao -> NOT expressao .)
+    ELSE            reduce using rule 52 (expressao -> NOT expressao .)
+    )               reduce using rule 52 (expressao -> NOT expressao .)
+    ,               reduce using rule 52 (expressao -> NOT expressao .)
+    +               shift and go to state 73
+    -               shift and go to state 74
+    *               shift and go to state 75
+    DIV             shift and go to state 76
+    =               shift and go to state 79
+    DIFERENTE       shift and go to state 80
+    MENOR           shift and go to state 81
+    MENOR_IGUAL     shift and go to state 82
+    MAIOR           shift and go to state 83
+    MAIOR_IGUAL     shift and go to state 84
+
+  ! +               [ reduce using rule 52 (expressao -> NOT expressao .) ]
+  ! -               [ reduce using rule 52 (expressao -> NOT expressao .) ]
+  ! *               [ reduce using rule 52 (expressao -> NOT expressao .) ]
+  ! DIV             [ reduce using rule 52 (expressao -> NOT expressao .) ]
+  ! =               [ reduce using rule 52 (expressao -> NOT expressao .) ]
+  ! DIFERENTE       [ reduce using rule 52 (expressao -> NOT expressao .) ]
+  ! MENOR           [ reduce using rule 52 (expressao -> NOT expressao .) ]
+  ! MENOR_IGUAL     [ reduce using rule 52 (expressao -> NOT expressao .) ]
+  ! MAIOR           [ reduce using rule 52 (expressao -> NOT expressao .) ]
+  ! MAIOR_IGUAL     [ reduce using rule 52 (expressao -> NOT expressao .) ]
+  ! OR              [ shift and go to state 77 ]
+  ! AND             [ shift and go to state 78 ]
+
+
+state 87
+
+    (54) expressao -> ( expressao . )
+    (40) expressao -> expressao . + expressao
+    (41) expressao -> expressao . - expressao
+    (42) expressao -> expressao . * expressao
+    (43) expressao -> expressao . DIV expressao
+    (44) expressao -> expressao . OR expressao
+    (45) expressao -> expressao . AND expressao
+    (46) expressao -> expressao . = expressao
+    (47) expressao -> expressao . DIFERENTE expressao
+    (48) expressao -> expressao . MENOR expressao
+    (49) expressao -> expressao . MENOR_IGUAL expressao
+    (50) expressao -> expressao . MAIOR expressao
+    (51) expressao -> expressao . MAIOR_IGUAL expressao
+
+    )               shift and go to state 112
+    +               shift and go to state 73
+    -               shift and go to state 74
+    *               shift and go to state 75
+    DIV             shift and go to state 76
+    OR              shift and go to state 77
+    AND             shift and go to state 78
+    =               shift and go to state 79
+    DIFERENTE       shift and go to state 80
+    MENOR           shift and go to state 81
+    MENOR_IGUAL     shift and go to state 82
+    MAIOR           shift and go to state 83
+    MAIOR_IGUAL     shift and go to state 84
+
+
+state 88
+
+    (30) repeticao -> WHILE expressao DO . comando
+    (19) comando -> . atribuicao
+    (20) comando -> . condicional
+    (21) comando -> . repeticao
+    (22) comando -> . chamada_read
+    (23) comando -> . chamada_write
+    (24) comando -> . comando_composto
+    (26) atribuicao -> . ID ATRIBUICAO expressao
+    (27) condicional -> . IF expressao THEN comando else_opcional
+    (30) repeticao -> . WHILE expressao DO comando
+    (31) chamada_read -> . READ ( lista_ids_read )
+    (34) chamada_write -> . WRITE ( lista_exp_write )
+    (35) chamada_write -> . WRITE ( error )
+    (25) comando_composto -> . BEGIN lista_comandos END
+
+    ID              shift and go to state 36
+    IF              shift and go to state 37
+    WHILE           shift and go to state 38
+    READ            shift and go to state 39
+    WRITE           shift and go to state 40
+    BEGIN           shift and go to state 25
+
+    comando                        shift and go to state 113
+    atribuicao                     shift and go to state 30
+    condicional                    shift and go to state 31
+    repeticao                      shift and go to state 32
+    chamada_read                   shift and go to state 33
+    chamada_write                  shift and go to state 34
+    comando_composto               shift and go to state 35
+
+state 89
+
+    (31) chamada_read -> READ ( lista_ids_read . )
+
+    )               shift and go to state 114
+
+
+state 90
+
+    (32) lista_ids_read -> lista_ids .
+    (10) lista_ids -> lista_ids . , ID
+
+    )               reduce using rule 32 (lista_ids_read -> lista_ids .)
+    ,               shift and go to state 44
+
+
+state 91
+
+    (33) lista_ids_read -> empty .
+
+    )               reduce using rule 33 (lista_ids_read -> empty .)
+
+
+state 92
+
+    (34) chamada_write -> WRITE ( lista_exp_write . )
+
+    )               shift and go to state 115
+
+
+state 93
+
+    (35) chamada_write -> WRITE ( error . )
+
+    )               shift and go to state 116
+
+
+state 94
+
+    (36) lista_exp_write -> lista_expressoes .
+    (38) lista_expressoes -> lista_expressoes . , expressao
+
+    )               reduce using rule 36 (lista_exp_write -> lista_expressoes .)
+    ,               shift and go to state 117
+
+
+state 95
+
+    (37) lista_exp_write -> empty .
+
+    )               reduce using rule 37 (lista_exp_write -> empty .)
+
+
+state 96
+
+    (39) lista_expressoes -> expressao .
+    (40) expressao -> expressao . + expressao
+    (41) expressao -> expressao . - expressao
+    (42) expressao -> expressao . * expressao
+    (43) expressao -> expressao . DIV expressao
+    (44) expressao -> expressao . OR expressao
+    (45) expressao -> expressao . AND expressao
+    (46) expressao -> expressao . = expressao
+    (47) expressao -> expressao . DIFERENTE expressao
+    (48) expressao -> expressao . MENOR expressao
+    (49) expressao -> expressao . MENOR_IGUAL expressao
+    (50) expressao -> expressao . MAIOR expressao
+    (51) expressao -> expressao . MAIOR_IGUAL expressao
+
+    ,               reduce using rule 39 (lista_expressoes -> expressao .)
+    )               reduce using rule 39 (lista_expressoes -> expressao .)
+    +               shift and go to state 73
+    -               shift and go to state 74
+    *               shift and go to state 75
+    DIV             shift and go to state 76
+    OR              shift and go to state 77
+    AND             shift and go to state 78
+    =               shift and go to state 79
+    DIFERENTE       shift and go to state 80
+    MENOR           shift and go to state 81
+    MENOR_IGUAL     shift and go to state 82
+    MAIOR           shift and go to state 83
+    MAIOR_IGUAL     shift and go to state 84
+
+
+state 97
+
+    (8) declaracao -> lista_ids DOIS_PONTOS tipo ; .
+
+    error           reduce using rule 8 (declaracao -> lista_ids DOIS_PONTOS tipo ; .)
+    ID              reduce using rule 8 (declaracao -> lista_ids DOIS_PONTOS tipo ; .)
+    BEGIN           reduce using rule 8 (declaracao -> lista_ids DOIS_PONTOS tipo ; .)
+
+
+state 98
+
+    (9) declaracao -> error DOIS_PONTOS tipo ; .
+
+    error           reduce using rule 9 (declaracao -> error DOIS_PONTOS tipo ; .)
+    ID              reduce using rule 9 (declaracao -> error DOIS_PONTOS tipo ; .)
+    BEGIN           reduce using rule 9 (declaracao -> error DOIS_PONTOS tipo ; .)
+
+
+state 99
+
+    (27) condicional -> IF expressao THEN comando . else_opcional
+    (28) else_opcional -> . ELSE comando
+    (29) else_opcional -> . empty
+    (65) empty -> .
+
+  ! shift/reduce conflict for ELSE resolved as shift
+    ELSE            shift and go to state 119
+    ;               reduce using rule 65 (empty -> .)
+    END             reduce using rule 65 (empty -> .)
+    error           reduce using rule 65 (empty -> .)
+
+  ! ELSE            [ reduce using rule 65 (empty -> .) ]
+
+    else_opcional                  shift and go to state 118
+    empty                          shift and go to state 120
+
+state 100
+
+    (40) expressao -> expressao + expressao .
+    (40) expressao -> expressao . + expressao
+    (41) expressao -> expressao . - expressao
+    (42) expressao -> expressao . * expressao
+    (43) expressao -> expressao . DIV expressao
+    (44) expressao -> expressao . OR expressao
+    (45) expressao -> expressao . AND expressao
+    (46) expressao -> expressao . = expressao
+    (47) expressao -> expressao . DIFERENTE expressao
+    (48) expressao -> expressao . MENOR expressao
+    (49) expressao -> expressao . MENOR_IGUAL expressao
+    (50) expressao -> expressao . MAIOR expressao
+    (51) expressao -> expressao . MAIOR_IGUAL expressao
+
+    THEN            reduce using rule 40 (expressao -> expressao + expressao .)
+    +               reduce using rule 40 (expressao -> expressao + expressao .)
+    -               reduce using rule 40 (expressao -> expressao + expressao .)
+    OR              reduce using rule 40 (expressao -> expressao + expressao .)
+    AND             reduce using rule 40 (expressao -> expressao + expressao .)
+    =               reduce using rule 40 (expressao -> expressao + expressao .)
+    DIFERENTE       reduce using rule 40 (expressao -> expressao + expressao .)
+    MENOR           reduce using rule 40 (expressao -> expressao + expressao .)
+    MENOR_IGUAL     reduce using rule 40 (expressao -> expressao + expressao .)
+    MAIOR           reduce using rule 40 (expressao -> expressao + expressao .)
+    MAIOR_IGUAL     reduce using rule 40 (expressao -> expressao + expressao .)
+    DO              reduce using rule 40 (expressao -> expressao + expressao .)
+    ;               reduce using rule 40 (expressao -> expressao + expressao .)
+    END             reduce using rule 40 (expressao -> expressao + expressao .)
+    error           reduce using rule 40 (expressao -> expressao + expressao .)
+    ELSE            reduce using rule 40 (expressao -> expressao + expressao .)
+    )               reduce using rule 40 (expressao -> expressao + expressao .)
+    ,               reduce using rule 40 (expressao -> expressao + expressao .)
+    *               shift and go to state 75
+    DIV             shift and go to state 76
+
+  ! *               [ reduce using rule 40 (expressao -> expressao + expressao .) ]
+  ! DIV             [ reduce using rule 40 (expressao -> expressao + expressao .) ]
+  ! +               [ shift and go to state 73 ]
+  ! -               [ shift and go to state 74 ]
+  ! OR              [ shift and go to state 77 ]
+  ! AND             [ shift and go to state 78 ]
+  ! =               [ shift and go to state 79 ]
+  ! DIFERENTE       [ shift and go to state 80 ]
+  ! MENOR           [ shift and go to state 81 ]
+  ! MENOR_IGUAL     [ shift and go to state 82 ]
+  ! MAIOR           [ shift and go to state 83 ]
+  ! MAIOR_IGUAL     [ shift and go to state 84 ]
+
+
+state 101
+
+    (41) expressao -> expressao - expressao .
+    (40) expressao -> expressao . + expressao
+    (41) expressao -> expressao . - expressao
+    (42) expressao -> expressao . * expressao
+    (43) expressao -> expressao . DIV expressao
+    (44) expressao -> expressao . OR expressao
+    (45) expressao -> expressao . AND expressao
+    (46) expressao -> expressao . = expressao
+    (47) expressao -> expressao . DIFERENTE expressao
+    (48) expressao -> expressao . MENOR expressao
+    (49) expressao -> expressao . MENOR_IGUAL expressao
+    (50) expressao -> expressao . MAIOR expressao
+    (51) expressao -> expressao . MAIOR_IGUAL expressao
+
+    THEN            reduce using rule 41 (expressao -> expressao - expressao .)
+    +               reduce using rule 41 (expressao -> expressao - expressao .)
+    -               reduce using rule 41 (expressao -> expressao - expressao .)
+    OR              reduce using rule 41 (expressao -> expressao - expressao .)
+    AND             reduce using rule 41 (expressao -> expressao - expressao .)
+    =               reduce using rule 41 (expressao -> expressao - expressao .)
+    DIFERENTE       reduce using rule 41 (expressao -> expressao - expressao .)
+    MENOR           reduce using rule 41 (expressao -> expressao - expressao .)
+    MENOR_IGUAL     reduce using rule 41 (expressao -> expressao - expressao .)
+    MAIOR           reduce using rule 41 (expressao -> expressao - expressao .)
+    MAIOR_IGUAL     reduce using rule 41 (expressao -> expressao - expressao .)
+    DO              reduce using rule 41 (expressao -> expressao - expressao .)
+    ;               reduce using rule 41 (expressao -> expressao - expressao .)
+    END             reduce using rule 41 (expressao -> expressao - expressao .)
+    error           reduce using rule 41 (expressao -> expressao - expressao .)
+    ELSE            reduce using rule 41 (expressao -> expressao - expressao .)
+    )               reduce using rule 41 (expressao -> expressao - expressao .)
+    ,               reduce using rule 41 (expressao -> expressao - expressao .)
+    *               shift and go to state 75
+    DIV             shift and go to state 76
+
+  ! *               [ reduce using rule 41 (expressao -> expressao - expressao .) ]
+  ! DIV             [ reduce using rule 41 (expressao -> expressao - expressao .) ]
+  ! +               [ shift and go to state 73 ]
+  ! -               [ shift and go to state 74 ]
+  ! OR              [ shift and go to state 77 ]
+  ! AND             [ shift and go to state 78 ]
+  ! =               [ shift and go to state 79 ]
+  ! DIFERENTE       [ shift and go to state 80 ]
+  ! MENOR           [ shift and go to state 81 ]
+  ! MENOR_IGUAL     [ shift and go to state 82 ]
+  ! MAIOR           [ shift and go to state 83 ]
+  ! MAIOR_IGUAL     [ shift and go to state 84 ]
+
+
+state 102
+
+    (42) expressao -> expressao * expressao .
+    (40) expressao -> expressao . + expressao
+    (41) expressao -> expressao . - expressao
+    (42) expressao -> expressao . * expressao
+    (43) expressao -> expressao . DIV expressao
+    (44) expressao -> expressao . OR expressao
+    (45) expressao -> expressao . AND expressao
+    (46) expressao -> expressao . = expressao
+    (47) expressao -> expressao . DIFERENTE expressao
+    (48) expressao -> expressao . MENOR expressao
+    (49) expressao -> expressao . MENOR_IGUAL expressao
+    (50) expressao -> expressao . MAIOR expressao
+    (51) expressao -> expressao . MAIOR_IGUAL expressao
+
+    THEN            reduce using rule 42 (expressao -> expressao * expressao .)
+    +               reduce using rule 42 (expressao -> expressao * expressao .)
+    -               reduce using rule 42 (expressao -> expressao * expressao .)
+    *               reduce using rule 42 (expressao -> expressao * expressao .)
+    DIV             reduce using rule 42 (expressao -> expressao * expressao .)
+    OR              reduce using rule 42 (expressao -> expressao * expressao .)
+    AND             reduce using rule 42 (expressao -> expressao * expressao .)
+    =               reduce using rule 42 (expressao -> expressao * expressao .)
+    DIFERENTE       reduce using rule 42 (expressao -> expressao * expressao .)
+    MENOR           reduce using rule 42 (expressao -> expressao * expressao .)
+    MENOR_IGUAL     reduce using rule 42 (expressao -> expressao * expressao .)
+    MAIOR           reduce using rule 42 (expressao -> expressao * expressao .)
+    MAIOR_IGUAL     reduce using rule 42 (expressao -> expressao * expressao .)
+    DO              reduce using rule 42 (expressao -> expressao * expressao .)
+    ;               reduce using rule 42 (expressao -> expressao * expressao .)
+    END             reduce using rule 42 (expressao -> expressao * expressao .)
+    error           reduce using rule 42 (expressao -> expressao * expressao .)
+    ELSE            reduce using rule 42 (expressao -> expressao * expressao .)
+    )               reduce using rule 42 (expressao -> expressao * expressao .)
+    ,               reduce using rule 42 (expressao -> expressao * expressao .)
+
+  ! +               [ shift and go to state 73 ]
+  ! -               [ shift and go to state 74 ]
+  ! *               [ shift and go to state 75 ]
+  ! DIV             [ shift and go to state 76 ]
+  ! OR              [ shift and go to state 77 ]
+  ! AND             [ shift and go to state 78 ]
+  ! =               [ shift and go to state 79 ]
+  ! DIFERENTE       [ shift and go to state 80 ]
+  ! MENOR           [ shift and go to state 81 ]
+  ! MENOR_IGUAL     [ shift and go to state 82 ]
+  ! MAIOR           [ shift and go to state 83 ]
+  ! MAIOR_IGUAL     [ shift and go to state 84 ]
+
+
+state 103
+
+    (43) expressao -> expressao DIV expressao .
+    (40) expressao -> expressao . + expressao
+    (41) expressao -> expressao . - expressao
+    (42) expressao -> expressao . * expressao
+    (43) expressao -> expressao . DIV expressao
+    (44) expressao -> expressao . OR expressao
+    (45) expressao -> expressao . AND expressao
+    (46) expressao -> expressao . = expressao
+    (47) expressao -> expressao . DIFERENTE expressao
+    (48) expressao -> expressao . MENOR expressao
+    (49) expressao -> expressao . MENOR_IGUAL expressao
+    (50) expressao -> expressao . MAIOR expressao
+    (51) expressao -> expressao . MAIOR_IGUAL expressao
+
+    THEN            reduce using rule 43 (expressao -> expressao DIV expressao .)
+    +               reduce using rule 43 (expressao -> expressao DIV expressao .)
+    -               reduce using rule 43 (expressao -> expressao DIV expressao .)
+    *               reduce using rule 43 (expressao -> expressao DIV expressao .)
+    DIV             reduce using rule 43 (expressao -> expressao DIV expressao .)
+    OR              reduce using rule 43 (expressao -> expressao DIV expressao .)
+    AND             reduce using rule 43 (expressao -> expressao DIV expressao .)
+    =               reduce using rule 43 (expressao -> expressao DIV expressao .)
+    DIFERENTE       reduce using rule 43 (expressao -> expressao DIV expressao .)
+    MENOR           reduce using rule 43 (expressao -> expressao DIV expressao .)
+    MENOR_IGUAL     reduce using rule 43 (expressao -> expressao DIV expressao .)
+    MAIOR           reduce using rule 43 (expressao -> expressao DIV expressao .)
+    MAIOR_IGUAL     reduce using rule 43 (expressao -> expressao DIV expressao .)
+    DO              reduce using rule 43 (expressao -> expressao DIV expressao .)
+    ;               reduce using rule 43 (expressao -> expressao DIV expressao .)
+    END             reduce using rule 43 (expressao -> expressao DIV expressao .)
+    error           reduce using rule 43 (expressao -> expressao DIV expressao .)
+    ELSE            reduce using rule 43 (expressao -> expressao DIV expressao .)
+    )               reduce using rule 43 (expressao -> expressao DIV expressao .)
+    ,               reduce using rule 43 (expressao -> expressao DIV expressao .)
+
+  ! +               [ shift and go to state 73 ]
+  ! -               [ shift and go to state 74 ]
+  ! *               [ shift and go to state 75 ]
+  ! DIV             [ shift and go to state 76 ]
+  ! OR              [ shift and go to state 77 ]
+  ! AND             [ shift and go to state 78 ]
+  ! =               [ shift and go to state 79 ]
+  ! DIFERENTE       [ shift and go to state 80 ]
+  ! MENOR           [ shift and go to state 81 ]
+  ! MENOR_IGUAL     [ shift and go to state 82 ]
+  ! MAIOR           [ shift and go to state 83 ]
+  ! MAIOR_IGUAL     [ shift and go to state 84 ]
+
+
+state 104
+
+    (44) expressao -> expressao OR expressao .
+    (40) expressao -> expressao . + expressao
+    (41) expressao -> expressao . - expressao
+    (42) expressao -> expressao . * expressao
+    (43) expressao -> expressao . DIV expressao
+    (44) expressao -> expressao . OR expressao
+    (45) expressao -> expressao . AND expressao
+    (46) expressao -> expressao . = expressao
+    (47) expressao -> expressao . DIFERENTE expressao
+    (48) expressao -> expressao . MENOR expressao
+    (49) expressao -> expressao . MENOR_IGUAL expressao
+    (50) expressao -> expressao . MAIOR expressao
+    (51) expressao -> expressao . MAIOR_IGUAL expressao
+
+    THEN            reduce using rule 44 (expressao -> expressao OR expressao .)
+    OR              reduce using rule 44 (expressao -> expressao OR expressao .)
+    DO              reduce using rule 44 (expressao -> expressao OR expressao .)
+    ;               reduce using rule 44 (expressao -> expressao OR expressao .)
+    END             reduce using rule 44 (expressao -> expressao OR expressao .)
+    error           reduce using rule 44 (expressao -> expressao OR expressao .)
+    ELSE            reduce using rule 44 (expressao -> expressao OR expressao .)
+    )               reduce using rule 44 (expressao -> expressao OR expressao .)
+    ,               reduce using rule 44 (expressao -> expressao OR expressao .)
+    +               shift and go to state 73
+    -               shift and go to state 74
+    *               shift and go to state 75
+    DIV             shift and go to state 76
+    AND             shift and go to state 78
+    =               shift and go to state 79
+    DIFERENTE       shift and go to state 80
+    MENOR           shift and go to state 81
+    MENOR_IGUAL     shift and go to state 82
+    MAIOR           shift and go to state 83
+    MAIOR_IGUAL     shift and go to state 84
+
+  ! +               [ reduce using rule 44 (expressao -> expressao OR expressao .) ]
+  ! -               [ reduce using rule 44 (expressao -> expressao OR expressao .) ]
+  ! *               [ reduce using rule 44 (expressao -> expressao OR expressao .) ]
+  ! DIV             [ reduce using rule 44 (expressao -> expressao OR expressao .) ]
+  ! AND             [ reduce using rule 44 (expressao -> expressao OR expressao .) ]
+  ! =               [ reduce using rule 44 (expressao -> expressao OR expressao .) ]
+  ! DIFERENTE       [ reduce using rule 44 (expressao -> expressao OR expressao .) ]
+  ! MENOR           [ reduce using rule 44 (expressao -> expressao OR expressao .) ]
+  ! MENOR_IGUAL     [ reduce using rule 44 (expressao -> expressao OR expressao .) ]
+  ! MAIOR           [ reduce using rule 44 (expressao -> expressao OR expressao .) ]
+  ! MAIOR_IGUAL     [ reduce using rule 44 (expressao -> expressao OR expressao .) ]
+  ! OR              [ shift and go to state 77 ]
+
+
+state 105
+
+    (45) expressao -> expressao AND expressao .
+    (40) expressao -> expressao . + expressao
+    (41) expressao -> expressao . - expressao
+    (42) expressao -> expressao . * expressao
+    (43) expressao -> expressao . DIV expressao
+    (44) expressao -> expressao . OR expressao
+    (45) expressao -> expressao . AND expressao
+    (46) expressao -> expressao . = expressao
+    (47) expressao -> expressao . DIFERENTE expressao
+    (48) expressao -> expressao . MENOR expressao
+    (49) expressao -> expressao . MENOR_IGUAL expressao
+    (50) expressao -> expressao . MAIOR expressao
+    (51) expressao -> expressao . MAIOR_IGUAL expressao
+
+    THEN            reduce using rule 45 (expressao -> expressao AND expressao .)
+    OR              reduce using rule 45 (expressao -> expressao AND expressao .)
+    AND             reduce using rule 45 (expressao -> expressao AND expressao .)
+    DO              reduce using rule 45 (expressao -> expressao AND expressao .)
+    ;               reduce using rule 45 (expressao -> expressao AND expressao .)
+    END             reduce using rule 45 (expressao -> expressao AND expressao .)
+    error           reduce using rule 45 (expressao -> expressao AND expressao .)
+    ELSE            reduce using rule 45 (expressao -> expressao AND expressao .)
+    )               reduce using rule 45 (expressao -> expressao AND expressao .)
+    ,               reduce using rule 45 (expressao -> expressao AND expressao .)
+    +               shift and go to state 73
+    -               shift and go to state 74
+    *               shift and go to state 75
+    DIV             shift and go to state 76
+    =               shift and go to state 79
+    DIFERENTE       shift and go to state 80
+    MENOR           shift and go to state 81
+    MENOR_IGUAL     shift and go to state 82
+    MAIOR           shift and go to state 83
+    MAIOR_IGUAL     shift and go to state 84
+
+  ! +               [ reduce using rule 45 (expressao -> expressao AND expressao .) ]
+  ! -               [ reduce using rule 45 (expressao -> expressao AND expressao .) ]
+  ! *               [ reduce using rule 45 (expressao -> expressao AND expressao .) ]
+  ! DIV             [ reduce using rule 45 (expressao -> expressao AND expressao .) ]
+  ! =               [ reduce using rule 45 (expressao -> expressao AND expressao .) ]
+  ! DIFERENTE       [ reduce using rule 45 (expressao -> expressao AND expressao .) ]
+  ! MENOR           [ reduce using rule 45 (expressao -> expressao AND expressao .) ]
+  ! MENOR_IGUAL     [ reduce using rule 45 (expressao -> expressao AND expressao .) ]
+  ! MAIOR           [ reduce using rule 45 (expressao -> expressao AND expressao .) ]
+  ! MAIOR_IGUAL     [ reduce using rule 45 (expressao -> expressao AND expressao .) ]
+  ! OR              [ shift and go to state 77 ]
+  ! AND             [ shift and go to state 78 ]
+
+
+state 106
+
+    (46) expressao -> expressao = expressao .
+    (40) expressao -> expressao . + expressao
+    (41) expressao -> expressao . - expressao
+    (42) expressao -> expressao . * expressao
+    (43) expressao -> expressao . DIV expressao
+    (44) expressao -> expressao . OR expressao
+    (45) expressao -> expressao . AND expressao
+    (46) expressao -> expressao . = expressao
+    (47) expressao -> expressao . DIFERENTE expressao
+    (48) expressao -> expressao . MENOR expressao
+    (49) expressao -> expressao . MENOR_IGUAL expressao
+    (50) expressao -> expressao . MAIOR expressao
+    (51) expressao -> expressao . MAIOR_IGUAL expressao
+
+    THEN            reduce using rule 46 (expressao -> expressao = expressao .)
+    OR              reduce using rule 46 (expressao -> expressao = expressao .)
+    AND             reduce using rule 46 (expressao -> expressao = expressao .)
+    =               reduce using rule 46 (expressao -> expressao = expressao .)
+    DIFERENTE       reduce using rule 46 (expressao -> expressao = expressao .)
+    MENOR           reduce using rule 46 (expressao -> expressao = expressao .)
+    MENOR_IGUAL     reduce using rule 46 (expressao -> expressao = expressao .)
+    MAIOR           reduce using rule 46 (expressao -> expressao = expressao .)
+    MAIOR_IGUAL     reduce using rule 46 (expressao -> expressao = expressao .)
+    DO              reduce using rule 46 (expressao -> expressao = expressao .)
+    ;               reduce using rule 46 (expressao -> expressao = expressao .)
+    END             reduce using rule 46 (expressao -> expressao = expressao .)
+    error           reduce using rule 46 (expressao -> expressao = expressao .)
+    ELSE            reduce using rule 46 (expressao -> expressao = expressao .)
+    )               reduce using rule 46 (expressao -> expressao = expressao .)
+    ,               reduce using rule 46 (expressao -> expressao = expressao .)
+    +               shift and go to state 73
+    -               shift and go to state 74
+    *               shift and go to state 75
+    DIV             shift and go to state 76
+
+  ! +               [ reduce using rule 46 (expressao -> expressao = expressao .) ]
+  ! -               [ reduce using rule 46 (expressao -> expressao = expressao .) ]
+  ! *               [ reduce using rule 46 (expressao -> expressao = expressao .) ]
+  ! DIV             [ reduce using rule 46 (expressao -> expressao = expressao .) ]
+  ! OR              [ shift and go to state 77 ]
+  ! AND             [ shift and go to state 78 ]
+  ! =               [ shift and go to state 79 ]
+  ! DIFERENTE       [ shift and go to state 80 ]
+  ! MENOR           [ shift and go to state 81 ]
+  ! MENOR_IGUAL     [ shift and go to state 82 ]
+  ! MAIOR           [ shift and go to state 83 ]
+  ! MAIOR_IGUAL     [ shift and go to state 84 ]
+
+
+state 107
+
+    (47) expressao -> expressao DIFERENTE expressao .
+    (40) expressao -> expressao . + expressao
+    (41) expressao -> expressao . - expressao
+    (42) expressao -> expressao . * expressao
+    (43) expressao -> expressao . DIV expressao
+    (44) expressao -> expressao . OR expressao
+    (45) expressao -> expressao . AND expressao
+    (46) expressao -> expressao . = expressao
+    (47) expressao -> expressao . DIFERENTE expressao
+    (48) expressao -> expressao . MENOR expressao
+    (49) expressao -> expressao . MENOR_IGUAL expressao
+    (50) expressao -> expressao . MAIOR expressao
+    (51) expressao -> expressao . MAIOR_IGUAL expressao
+
+    THEN            reduce using rule 47 (expressao -> expressao DIFERENTE expressao .)
+    OR              reduce using rule 47 (expressao -> expressao DIFERENTE expressao .)
+    AND             reduce using rule 47 (expressao -> expressao DIFERENTE expressao .)
+    =               reduce using rule 47 (expressao -> expressao DIFERENTE expressao .)
+    DIFERENTE       reduce using rule 47 (expressao -> expressao DIFERENTE expressao .)
+    MENOR           reduce using rule 47 (expressao -> expressao DIFERENTE expressao .)
+    MENOR_IGUAL     reduce using rule 47 (expressao -> expressao DIFERENTE expressao .)
+    MAIOR           reduce using rule 47 (expressao -> expressao DIFERENTE expressao .)
+    MAIOR_IGUAL     reduce using rule 47 (expressao -> expressao DIFERENTE expressao .)
+    DO              reduce using rule 47 (expressao -> expressao DIFERENTE expressao .)
+    ;               reduce using rule 47 (expressao -> expressao DIFERENTE expressao .)
+    END             reduce using rule 47 (expressao -> expressao DIFERENTE expressao .)
+    error           reduce using rule 47 (expressao -> expressao DIFERENTE expressao .)
+    ELSE            reduce using rule 47 (expressao -> expressao DIFERENTE expressao .)
+    )               reduce using rule 47 (expressao -> expressao DIFERENTE expressao .)
+    ,               reduce using rule 47 (expressao -> expressao DIFERENTE expressao .)
+    +               shift and go to state 73
+    -               shift and go to state 74
+    *               shift and go to state 75
+    DIV             shift and go to state 76
+
+  ! +               [ reduce using rule 47 (expressao -> expressao DIFERENTE expressao .) ]
+  ! -               [ reduce using rule 47 (expressao -> expressao DIFERENTE expressao .) ]
+  ! *               [ reduce using rule 47 (expressao -> expressao DIFERENTE expressao .) ]
+  ! DIV             [ reduce using rule 47 (expressao -> expressao DIFERENTE expressao .) ]
+  ! OR              [ shift and go to state 77 ]
+  ! AND             [ shift and go to state 78 ]
+  ! =               [ shift and go to state 79 ]
+  ! DIFERENTE       [ shift and go to state 80 ]
+  ! MENOR           [ shift and go to state 81 ]
+  ! MENOR_IGUAL     [ shift and go to state 82 ]
+  ! MAIOR           [ shift and go to state 83 ]
+  ! MAIOR_IGUAL     [ shift and go to state 84 ]
+
+
+state 108
+
+    (48) expressao -> expressao MENOR expressao .
+    (40) expressao -> expressao . + expressao
+    (41) expressao -> expressao . - expressao
+    (42) expressao -> expressao . * expressao
+    (43) expressao -> expressao . DIV expressao
+    (44) expressao -> expressao . OR expressao
+    (45) expressao -> expressao . AND expressao
+    (46) expressao -> expressao . = expressao
+    (47) expressao -> expressao . DIFERENTE expressao
+    (48) expressao -> expressao . MENOR expressao
+    (49) expressao -> expressao . MENOR_IGUAL expressao
+    (50) expressao -> expressao . MAIOR expressao
+    (51) expressao -> expressao . MAIOR_IGUAL expressao
+
+    THEN            reduce using rule 48 (expressao -> expressao MENOR expressao .)
+    OR              reduce using rule 48 (expressao -> expressao MENOR expressao .)
+    AND             reduce using rule 48 (expressao -> expressao MENOR expressao .)
+    =               reduce using rule 48 (expressao -> expressao MENOR expressao .)
+    DIFERENTE       reduce using rule 48 (expressao -> expressao MENOR expressao .)
+    MENOR           reduce using rule 48 (expressao -> expressao MENOR expressao .)
+    MENOR_IGUAL     reduce using rule 48 (expressao -> expressao MENOR expressao .)
+    MAIOR           reduce using rule 48 (expressao -> expressao MENOR expressao .)
+    MAIOR_IGUAL     reduce using rule 48 (expressao -> expressao MENOR expressao .)
+    DO              reduce using rule 48 (expressao -> expressao MENOR expressao .)
+    ;               reduce using rule 48 (expressao -> expressao MENOR expressao .)
+    END             reduce using rule 48 (expressao -> expressao MENOR expressao .)
+    error           reduce using rule 48 (expressao -> expressao MENOR expressao .)
+    ELSE            reduce using rule 48 (expressao -> expressao MENOR expressao .)
+    )               reduce using rule 48 (expressao -> expressao MENOR expressao .)
+    ,               reduce using rule 48 (expressao -> expressao MENOR expressao .)
+    +               shift and go to state 73
+    -               shift and go to state 74
+    *               shift and go to state 75
+    DIV             shift and go to state 76
+
+  ! +               [ reduce using rule 48 (expressao -> expressao MENOR expressao .) ]
+  ! -               [ reduce using rule 48 (expressao -> expressao MENOR expressao .) ]
+  ! *               [ reduce using rule 48 (expressao -> expressao MENOR expressao .) ]
+  ! DIV             [ reduce using rule 48 (expressao -> expressao MENOR expressao .) ]
+  ! OR              [ shift and go to state 77 ]
+  ! AND             [ shift and go to state 78 ]
+  ! =               [ shift and go to state 79 ]
+  ! DIFERENTE       [ shift and go to state 80 ]
+  ! MENOR           [ shift and go to state 81 ]
+  ! MENOR_IGUAL     [ shift and go to state 82 ]
+  ! MAIOR           [ shift and go to state 83 ]
+  ! MAIOR_IGUAL     [ shift and go to state 84 ]
+
+
+state 109
+
+    (49) expressao -> expressao MENOR_IGUAL expressao .
+    (40) expressao -> expressao . + expressao
+    (41) expressao -> expressao . - expressao
+    (42) expressao -> expressao . * expressao
+    (43) expressao -> expressao . DIV expressao
+    (44) expressao -> expressao . OR expressao
+    (45) expressao -> expressao . AND expressao
+    (46) expressao -> expressao . = expressao
+    (47) expressao -> expressao . DIFERENTE expressao
+    (48) expressao -> expressao . MENOR expressao
+    (49) expressao -> expressao . MENOR_IGUAL expressao
+    (50) expressao -> expressao . MAIOR expressao
+    (51) expressao -> expressao . MAIOR_IGUAL expressao
+
+    THEN            reduce using rule 49 (expressao -> expressao MENOR_IGUAL expressao .)
+    OR              reduce using rule 49 (expressao -> expressao MENOR_IGUAL expressao .)
+    AND             reduce using rule 49 (expressao -> expressao MENOR_IGUAL expressao .)
+    =               reduce using rule 49 (expressao -> expressao MENOR_IGUAL expressao .)
+    DIFERENTE       reduce using rule 49 (expressao -> expressao MENOR_IGUAL expressao .)
+    MENOR           reduce using rule 49 (expressao -> expressao MENOR_IGUAL expressao .)
+    MENOR_IGUAL     reduce using rule 49 (expressao -> expressao MENOR_IGUAL expressao .)
+    MAIOR           reduce using rule 49 (expressao -> expressao MENOR_IGUAL expressao .)
+    MAIOR_IGUAL     reduce using rule 49 (expressao -> expressao MENOR_IGUAL expressao .)
+    DO              reduce using rule 49 (expressao -> expressao MENOR_IGUAL expressao .)
+    ;               reduce using rule 49 (expressao -> expressao MENOR_IGUAL expressao .)
+    END             reduce using rule 49 (expressao -> expressao MENOR_IGUAL expressao .)
+    error           reduce using rule 49 (expressao -> expressao MENOR_IGUAL expressao .)
+    ELSE            reduce using rule 49 (expressao -> expressao MENOR_IGUAL expressao .)
+    )               reduce using rule 49 (expressao -> expressao MENOR_IGUAL expressao .)
+    ,               reduce using rule 49 (expressao -> expressao MENOR_IGUAL expressao .)
+    +               shift and go to state 73
+    -               shift and go to state 74
+    *               shift and go to state 75
+    DIV             shift and go to state 76
+
+  ! +               [ reduce using rule 49 (expressao -> expressao MENOR_IGUAL expressao .) ]
+  ! -               [ reduce using rule 49 (expressao -> expressao MENOR_IGUAL expressao .) ]
+  ! *               [ reduce using rule 49 (expressao -> expressao MENOR_IGUAL expressao .) ]
+  ! DIV             [ reduce using rule 49 (expressao -> expressao MENOR_IGUAL expressao .) ]
+  ! OR              [ shift and go to state 77 ]
+  ! AND             [ shift and go to state 78 ]
+  ! =               [ shift and go to state 79 ]
+  ! DIFERENTE       [ shift and go to state 80 ]
+  ! MENOR           [ shift and go to state 81 ]
+  ! MENOR_IGUAL     [ shift and go to state 82 ]
+  ! MAIOR           [ shift and go to state 83 ]
+  ! MAIOR_IGUAL     [ shift and go to state 84 ]
+
+
+state 110
+
+    (50) expressao -> expressao MAIOR expressao .
+    (40) expressao -> expressao . + expressao
+    (41) expressao -> expressao . - expressao
+    (42) expressao -> expressao . * expressao
+    (43) expressao -> expressao . DIV expressao
+    (44) expressao -> expressao . OR expressao
+    (45) expressao -> expressao . AND expressao
+    (46) expressao -> expressao . = expressao
+    (47) expressao -> expressao . DIFERENTE expressao
+    (48) expressao -> expressao . MENOR expressao
+    (49) expressao -> expressao . MENOR_IGUAL expressao
+    (50) expressao -> expressao . MAIOR expressao
+    (51) expressao -> expressao . MAIOR_IGUAL expressao
+
+    THEN            reduce using rule 50 (expressao -> expressao MAIOR expressao .)
+    OR              reduce using rule 50 (expressao -> expressao MAIOR expressao .)
+    AND             reduce using rule 50 (expressao -> expressao MAIOR expressao .)
+    =               reduce using rule 50 (expressao -> expressao MAIOR expressao .)
+    DIFERENTE       reduce using rule 50 (expressao -> expressao MAIOR expressao .)
+    MENOR           reduce using rule 50 (expressao -> expressao MAIOR expressao .)
+    MENOR_IGUAL     reduce using rule 50 (expressao -> expressao MAIOR expressao .)
+    MAIOR           reduce using rule 50 (expressao -> expressao MAIOR expressao .)
+    MAIOR_IGUAL     reduce using rule 50 (expressao -> expressao MAIOR expressao .)
+    DO              reduce using rule 50 (expressao -> expressao MAIOR expressao .)
+    ;               reduce using rule 50 (expressao -> expressao MAIOR expressao .)
+    END             reduce using rule 50 (expressao -> expressao MAIOR expressao .)
+    error           reduce using rule 50 (expressao -> expressao MAIOR expressao .)
+    ELSE            reduce using rule 50 (expressao -> expressao MAIOR expressao .)
+    )               reduce using rule 50 (expressao -> expressao MAIOR expressao .)
+    ,               reduce using rule 50 (expressao -> expressao MAIOR expressao .)
+    +               shift and go to state 73
+    -               shift and go to state 74
+    *               shift and go to state 75
+    DIV             shift and go to state 76
+
+  ! +               [ reduce using rule 50 (expressao -> expressao MAIOR expressao .) ]
+  ! -               [ reduce using rule 50 (expressao -> expressao MAIOR expressao .) ]
+  ! *               [ reduce using rule 50 (expressao -> expressao MAIOR expressao .) ]
+  ! DIV             [ reduce using rule 50 (expressao -> expressao MAIOR expressao .) ]
+  ! OR              [ shift and go to state 77 ]
+  ! AND             [ shift and go to state 78 ]
+  ! =               [ shift and go to state 79 ]
+  ! DIFERENTE       [ shift and go to state 80 ]
+  ! MENOR           [ shift and go to state 81 ]
+  ! MENOR_IGUAL     [ shift and go to state 82 ]
+  ! MAIOR           [ shift and go to state 83 ]
+  ! MAIOR_IGUAL     [ shift and go to state 84 ]
+
+
+state 111
+
+    (51) expressao -> expressao MAIOR_IGUAL expressao .
+    (40) expressao -> expressao . + expressao
+    (41) expressao -> expressao . - expressao
+    (42) expressao -> expressao . * expressao
+    (43) expressao -> expressao . DIV expressao
+    (44) expressao -> expressao . OR expressao
+    (45) expressao -> expressao . AND expressao
+    (46) expressao -> expressao . = expressao
+    (47) expressao -> expressao . DIFERENTE expressao
+    (48) expressao -> expressao . MENOR expressao
+    (49) expressao -> expressao . MENOR_IGUAL expressao
+    (50) expressao -> expressao . MAIOR expressao
+    (51) expressao -> expressao . MAIOR_IGUAL expressao
+
+    THEN            reduce using rule 51 (expressao -> expressao MAIOR_IGUAL expressao .)
+    OR              reduce using rule 51 (expressao -> expressao MAIOR_IGUAL expressao .)
+    AND             reduce using rule 51 (expressao -> expressao MAIOR_IGUAL expressao .)
+    =               reduce using rule 51 (expressao -> expressao MAIOR_IGUAL expressao .)
+    DIFERENTE       reduce using rule 51 (expressao -> expressao MAIOR_IGUAL expressao .)
+    MENOR           reduce using rule 51 (expressao -> expressao MAIOR_IGUAL expressao .)
+    MENOR_IGUAL     reduce using rule 51 (expressao -> expressao MAIOR_IGUAL expressao .)
+    MAIOR           reduce using rule 51 (expressao -> expressao MAIOR_IGUAL expressao .)
+    MAIOR_IGUAL     reduce using rule 51 (expressao -> expressao MAIOR_IGUAL expressao .)
+    DO              reduce using rule 51 (expressao -> expressao MAIOR_IGUAL expressao .)
+    ;               reduce using rule 51 (expressao -> expressao MAIOR_IGUAL expressao .)
+    END             reduce using rule 51 (expressao -> expressao MAIOR_IGUAL expressao .)
+    error           reduce using rule 51 (expressao -> expressao MAIOR_IGUAL expressao .)
+    ELSE            reduce using rule 51 (expressao -> expressao MAIOR_IGUAL expressao .)
+    )               reduce using rule 51 (expressao -> expressao MAIOR_IGUAL expressao .)
+    ,               reduce using rule 51 (expressao -> expressao MAIOR_IGUAL expressao .)
+    +               shift and go to state 73
+    -               shift and go to state 74
+    *               shift and go to state 75
+    DIV             shift and go to state 76
+
+  ! +               [ reduce using rule 51 (expressao -> expressao MAIOR_IGUAL expressao .) ]
+  ! -               [ reduce using rule 51 (expressao -> expressao MAIOR_IGUAL expressao .) ]
+  ! *               [ reduce using rule 51 (expressao -> expressao MAIOR_IGUAL expressao .) ]
+  ! DIV             [ reduce using rule 51 (expressao -> expressao MAIOR_IGUAL expressao .) ]
+  ! OR              [ shift and go to state 77 ]
+  ! AND             [ shift and go to state 78 ]
+  ! =               [ shift and go to state 79 ]
+  ! DIFERENTE       [ shift and go to state 80 ]
+  ! MENOR           [ shift and go to state 81 ]
+  ! MENOR_IGUAL     [ shift and go to state 82 ]
+  ! MAIOR           [ shift and go to state 83 ]
+  ! MAIOR_IGUAL     [ shift and go to state 84 ]
+
+
+state 112
+
+    (54) expressao -> ( expressao ) .
+
+    THEN            reduce using rule 54 (expressao -> ( expressao ) .)
+    +               reduce using rule 54 (expressao -> ( expressao ) .)
+    -               reduce using rule 54 (expressao -> ( expressao ) .)
+    *               reduce using rule 54 (expressao -> ( expressao ) .)
+    DIV             reduce using rule 54 (expressao -> ( expressao ) .)
+    OR              reduce using rule 54 (expressao -> ( expressao ) .)
+    AND             reduce using rule 54 (expressao -> ( expressao ) .)
+    =               reduce using rule 54 (expressao -> ( expressao ) .)
+    DIFERENTE       reduce using rule 54 (expressao -> ( expressao ) .)
+    MENOR           reduce using rule 54 (expressao -> ( expressao ) .)
+    MENOR_IGUAL     reduce using rule 54 (expressao -> ( expressao ) .)
+    MAIOR           reduce using rule 54 (expressao -> ( expressao ) .)
+    MAIOR_IGUAL     reduce using rule 54 (expressao -> ( expressao ) .)
+    DO              reduce using rule 54 (expressao -> ( expressao ) .)
+    ;               reduce using rule 54 (expressao -> ( expressao ) .)
+    END             reduce using rule 54 (expressao -> ( expressao ) .)
+    error           reduce using rule 54 (expressao -> ( expressao ) .)
+    ELSE            reduce using rule 54 (expressao -> ( expressao ) .)
+    )               reduce using rule 54 (expressao -> ( expressao ) .)
+    ,               reduce using rule 54 (expressao -> ( expressao ) .)
+
+
+state 113
+
+    (30) repeticao -> WHILE expressao DO comando .
+
+    ;               reduce using rule 30 (repeticao -> WHILE expressao DO comando .)
+    END             reduce using rule 30 (repeticao -> WHILE expressao DO comando .)
+    error           reduce using rule 30 (repeticao -> WHILE expressao DO comando .)
+    ELSE            reduce using rule 30 (repeticao -> WHILE expressao DO comando .)
+
+
+state 114
+
+    (31) chamada_read -> READ ( lista_ids_read ) .
+
+    ;               reduce using rule 31 (chamada_read -> READ ( lista_ids_read ) .)
+    END             reduce using rule 31 (chamada_read -> READ ( lista_ids_read ) .)
+    error           reduce using rule 31 (chamada_read -> READ ( lista_ids_read ) .)
+    ELSE            reduce using rule 31 (chamada_read -> READ ( lista_ids_read ) .)
+
+
+state 115
+
+    (34) chamada_write -> WRITE ( lista_exp_write ) .
+
+    ;               reduce using rule 34 (chamada_write -> WRITE ( lista_exp_write ) .)
+    END             reduce using rule 34 (chamada_write -> WRITE ( lista_exp_write ) .)
+    error           reduce using rule 34 (chamada_write -> WRITE ( lista_exp_write ) .)
+    ELSE            reduce using rule 34 (chamada_write -> WRITE ( lista_exp_write ) .)
+
+
+state 116
+
+    (35) chamada_write -> WRITE ( error ) .
+
+    ;               reduce using rule 35 (chamada_write -> WRITE ( error ) .)
+    END             reduce using rule 35 (chamada_write -> WRITE ( error ) .)
+    error           reduce using rule 35 (chamada_write -> WRITE ( error ) .)
+    ELSE            reduce using rule 35 (chamada_write -> WRITE ( error ) .)
+
+
+state 117
+
+    (38) lista_expressoes -> lista_expressoes , . expressao
+    (40) expressao -> . expressao + expressao
+    (41) expressao -> . expressao - expressao
+    (42) expressao -> . expressao * expressao
+    (43) expressao -> . expressao DIV expressao
+    (44) expressao -> . expressao OR expressao
+    (45) expressao -> . expressao AND expressao
+    (46) expressao -> . expressao = expressao
+    (47) expressao -> . expressao DIFERENTE expressao
+    (48) expressao -> . expressao MENOR expressao
+    (49) expressao -> . expressao MENOR_IGUAL expressao
+    (50) expressao -> . expressao MAIOR expressao
+    (51) expressao -> . expressao MAIOR_IGUAL expressao
+    (52) expressao -> . NOT expressao
+    (53) expressao -> . - expressao
+    (54) expressao -> . ( expressao )
+    (55) expressao -> . fator
+    (56) fator -> . ID
+    (57) fator -> . NUM
+    (58) fator -> . TRUE
+    (59) fator -> . FALSE
+
+    NOT             shift and go to state 53
+    -               shift and go to state 52
+    (               shift and go to state 54
+    ID              shift and go to state 56
+    NUM             shift and go to state 57
+    TRUE            shift and go to state 58
+    FALSE           shift and go to state 59
+
+    expressao                      shift and go to state 121
+    fator                          shift and go to state 55
+
+state 118
+
+    (27) condicional -> IF expressao THEN comando else_opcional .
+
+    ;               reduce using rule 27 (condicional -> IF expressao THEN comando else_opcional .)
+    END             reduce using rule 27 (condicional -> IF expressao THEN comando else_opcional .)
+    error           reduce using rule 27 (condicional -> IF expressao THEN comando else_opcional .)
+    ELSE            reduce using rule 27 (condicional -> IF expressao THEN comando else_opcional .)
+
+
+state 119
+
+    (28) else_opcional -> ELSE . comando
+    (19) comando -> . atribuicao
+    (20) comando -> . condicional
+    (21) comando -> . repeticao
+    (22) comando -> . chamada_read
+    (23) comando -> . chamada_write
+    (24) comando -> . comando_composto
+    (26) atribuicao -> . ID ATRIBUICAO expressao
+    (27) condicional -> . IF expressao THEN comando else_opcional
+    (30) repeticao -> . WHILE expressao DO comando
+    (31) chamada_read -> . READ ( lista_ids_read )
+    (34) chamada_write -> . WRITE ( lista_exp_write )
+    (35) chamada_write -> . WRITE ( error )
+    (25) comando_composto -> . BEGIN lista_comandos END
+
+    ID              shift and go to state 36
+    IF              shift and go to state 37
+    WHILE           shift and go to state 38
+    READ            shift and go to state 39
+    WRITE           shift and go to state 40
+    BEGIN           shift and go to state 25
+
+    comando                        shift and go to state 122
+    atribuicao                     shift and go to state 30
+    condicional                    shift and go to state 31
+    repeticao                      shift and go to state 32
+    chamada_read                   shift and go to state 33
+    chamada_write                  shift and go to state 34
+    comando_composto               shift and go to state 35
+
+state 120
+
+    (29) else_opcional -> empty .
+
+    ELSE            reduce using rule 29 (else_opcional -> empty .)
+    ;               reduce using rule 29 (else_opcional -> empty .)
+    END             reduce using rule 29 (else_opcional -> empty .)
+    error           reduce using rule 29 (else_opcional -> empty .)
+
+
+state 121
+
+    (38) lista_expressoes -> lista_expressoes , expressao .
+    (40) expressao -> expressao . + expressao
+    (41) expressao -> expressao . - expressao
+    (42) expressao -> expressao . * expressao
+    (43) expressao -> expressao . DIV expressao
+    (44) expressao -> expressao . OR expressao
+    (45) expressao -> expressao . AND expressao
+    (46) expressao -> expressao . = expressao
+    (47) expressao -> expressao . DIFERENTE expressao
+    (48) expressao -> expressao . MENOR expressao
+    (49) expressao -> expressao . MENOR_IGUAL expressao
+    (50) expressao -> expressao . MAIOR expressao
+    (51) expressao -> expressao . MAIOR_IGUAL expressao
+
+    ,               reduce using rule 38 (lista_expressoes -> lista_expressoes , expressao .)
+    )               reduce using rule 38 (lista_expressoes -> lista_expressoes , expressao .)
+    +               shift and go to state 73
+    -               shift and go to state 74
+    *               shift and go to state 75
+    DIV             shift and go to state 76
+    OR              shift and go to state 77
+    AND             shift and go to state 78
+    =               shift and go to state 79
+    DIFERENTE       shift and go to state 80
+    MENOR           shift and go to state 81
+    MENOR_IGUAL     shift and go to state 82
+    MAIOR           shift and go to state 83
+    MAIOR_IGUAL     shift and go to state 84
+
+
+state 122
+
+    (28) else_opcional -> ELSE comando .
+
+    ELSE            reduce using rule 28 (else_opcional -> ELSE comando .)
+    ;               reduce using rule 28 (else_opcional -> ELSE comando .)
+    END             reduce using rule 28 (else_opcional -> ELSE comando .)
+    error           reduce using rule 28 (else_opcional -> ELSE comando .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for error in state 16 resolved as shift
+WARNING: shift/reduce conflict for ELSE in state 99 resolved as shift

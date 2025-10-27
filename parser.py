@@ -19,16 +19,19 @@ class TabelaSimbolos:
     def busca(self, nome):
         return self.tabela.get(nome, None)
 
-# Variáveis Globais para controle
+# Variáveis globais
 tab_simbolos = TabelaSimbolos()
 tem_erro = False
 parser = None
 
 # Função auxiliar para erros semânticos
-def erro_semantico(msg, lineno):
+def erro_semantico(msg, lineno=None):
     global tem_erro
     tem_erro = True
-    print(f"ERRO SEMÂNTICO na linha {lineno}: {msg}")
+    if lineno is None:
+        print(f"ERRO SEMÂNTICO: {msg}")
+    else:
+        print(f"ERRO SEMÂNTICO na linha {lineno}: {msg}")
 
 # -------------------------
 # PRECEDÊNCIA DE OPERADORES
@@ -76,17 +79,15 @@ def p_declaracao(p):
     
     for nome in lista_de_nomes:
         if not tab_simbolos.instala(nome, tipo=tipo_variavel):
-            erro_semantico(f"Identificador '{nome}' já declarado.", p.lineno(1))
+            erro_semantico(f"Variável '{nome}' já declarado.", p.lineno(1))
 
 def p_declaracao_erro(p):
     "declaracao : error DOIS_PONTOS tipo ';'" 
-    
     erro_tok = p[1] 
     if erro_tok.type in reservado.values():
         msg = f"Palavra reservada '{erro_tok.value}' não pode ser usada como nome de variável."
     else:
         msg = f"Token inesperado '{erro_tok.value}'. Esperava um identificador."
-        
     print(f"ERRO SINTÁTICO na linha {p.lineno(1)}: {msg}")
     global tem_erro; tem_erro = True
     parser.errok()
@@ -137,20 +138,23 @@ def p_atribuicao(p):
     """atribuicao : ID ATRIBUICAO expressao"""
     nome_var = p[1]
     var = tab_simbolos.busca(nome_var)
+    tipo_expr = p[3]
     if not var:
         erro_semantico(f"Variável '{nome_var}' não declarada.", p.lineno(1))
-    
-    # TODO (Verificação de Tipos):
-    # tipo_var = var['tipo']
-    # tipo_expr = p[3] 
-    # if tipo_var != tipo_expr:
-    #     erro_semantico(...)
+        return
+    tipo_var = var['tipo']
+
+    if tipo_expr is None:
+        return
+
+    if tipo_var != tipo_expr:
+        erro_semantico(f"Variável '{var}' não pode ser do tipo '{tipo_expr}'", p.lineno(1))
 
 def p_condicional(p):
     """condicional : IF expressao THEN comando else_opcional"""
-    # TODO (Verificação de Tipos):
-    # if p[2] != 'boolean':
-    #     erro_semantico(f"Expressão do IF deve ser booleana.", p.lineno(1))
+    tipo_expr = p[2]
+    if tipo_expr is not None and tipo_expr != 'boolean':
+        erro_semantico(f"Expressão da condição 'IF' deve ser de tipo lógico", p.lineno(2))
     p[0] = None
 
 def p_else_opcional(p):
@@ -160,9 +164,9 @@ def p_else_opcional(p):
 
 def p_repeticao(p):
     """repeticao : WHILE expressao DO comando"""
-    # TODO (Verificação de Tipos):
-    # if p[2] != 'boolean':
-    #     erro_semantico(f"Expressão do WHILE deve ser booleana.", p.lineno(1))
+    tipo_expr = p[2]
+    if tipo_expr is not None and tipo_expr != 'boolean':
+        erro_semantico(f"Expressão da condição 'WHILE' deve ser de tipo lógico", p.lineno(1))
     p[0] = None
 
 def p_chamada_read(p):
@@ -215,16 +219,60 @@ def p_expressao_operacoes(p):
                  | expressao MENOR_IGUAL expressao
                  | expressao MAIOR expressao
                  | expressao MAIOR_IGUAL expressao"""
-    # TODO: Verificação de tipo 
-    p[0] = None # Placeholder (deveria retornar o tipo)
+    tipo_esq = p[1]  
+    op = p[2]        
+    tipo_dir = p[3]
+    tipo_resultado = None
+
+    if tipo_esq is None or tipo_dir is None:
+        p[0] = None
+        return
+    # Aritmética
+    if op == '+' or op == '-' or op == '*' or op == 'DIV':
+        if tipo_esq != 'integer' or tipo_dir != 'integer':
+            erro_semantico(f"Operação '{op}' só pode ser feita entre inteiros", p.lineno(2))
+            tipo_resultado = None
+        else:
+            tipo_resultado = 'integer'
+    # Relacional
+    elif op == '>' or op == '<' or op == '=' or op == 'DIFERENTE' or op == 'MENOR_IGUAL' or op == 'MAIOR_IGUAL':
+        if tipo_esq != tipo_dir:
+            erro_semantico(f"Operação '{op}' só pode ser feita entre tipos iguais", p.lineno(2))
+            tipo_resultado = None
+        else:
+            tipo_resultado = 'boolean'
+    # Lógica
+    elif op == 'AND' or op == 'OR':
+        if tipo_esq != 'boolean' or tipo_dir != 'boolean':
+            erro_semantico(f"Operação '{op}' só pode ser feita entre booleanos", p.lineno(2))
+            tipo_resultado = None
+        else:
+            tipo_resultado = 'boolean'
+    p[0] = tipo_resultado
 
 def p_expressao_not(p):
     """expressao : NOT expressao"""
-    p[0] = None # Placeholder (deveria retornar 'boolean')
+    tipo_op = p[2]
+    if tipo_op is None:
+        p[0] = None
+        return
+    if tipo_op != 'boolean':
+        erro_semantico(f"Operador 'not' requer um operando 'boolean'.", p.lineno(1))
+        p[0] = None
+    else: 
+        p[0] = 'boolean'
 
 def p_expressao_unary_minus(p):
     """expressao : '-' expressao %prec UNARY_MINUS"""
-    p[0] = None # Placeholder (deveria retornar 'integer')
+    tipo_op = p[2]
+    if tipo_op is None:
+        p[0] = None # Propaga o erro
+        return
+    if tipo_op != 'integer':
+        erro_semantico(f"Operador de negação '-' requer um operando 'integer'.", p.lineno(1))
+        p[0] = None
+    else:
+        p[0] = 'integer'
 
 def p_expressao_parenteses(p):
     """expressao : '(' expressao ')'"""
@@ -232,7 +280,7 @@ def p_expressao_parenteses(p):
 
 def p_expressao_fator(p):
     """expressao : fator"""
-    p[0] = p[1] 
+    p[0] = p[1]
 
 def p_fator(p):
     """fator : ID
@@ -243,16 +291,52 @@ def p_fator(p):
         nome_var = p[1]
         var = tab_simbolos.busca(nome_var)
         if not var:
-            erro_semantico(f"Variável '{nome_var}' não declarada.", p.lineno(1))
+            erro_semantico(f"Variável '{nome_var}' sem declaração prévia.", p.lineno(1))
             p[0] = None 
         else:
             p[0] = var['tipo'] 
-            
     elif p.slice[1].type == 'NUM':
-        p[0] = 'integer' 
-        
+        p[0] = 'integer'
     elif p.slice[1].type == 'TRUE' or p.slice[1].type == 'FALSE':
-        p[0] = 'boolean' 
+        p[0] = 'boolean'
+
+# Regras de ERRO
+# Cabeçalho (program ID ;)
+def p_cabecalho_erro_program(p):
+    "cabecalho : error ID ';'"
+    print(f"ERRO SINTÁTICO na linha {p.lineno(1)}: esperava 'program'")
+    global tem_erro
+    tem_erro = True
+    parser.errok()
+
+def p_cabecalho_erro_id(p):
+    "cabecalho : PROGRAM error ';'"
+    print(f"ERRO SINTÁTICO na linha {p.lineno(2)}: esperava identificador após 'program'")
+    global tem_erro
+    tem_erro = True
+    parser.errok()
+
+def p_cabecalho_erro_delim(p):
+    "cabecalho : PROGRAM ID error"
+    print(f"ERRO SINTÁTICO na linha {p.lineno(3)}: esperava ';'")
+    global tem_erro
+    tem_erro = True
+    parser.errok()
+
+# Comandos
+def p_parte_comandos_erro_begin(p):
+    "parte_comandos : error lista_comandos END"
+    print(f"ERRO SINTÁTICO na linha {p.lineno(1)}: esperava 'begin' antes dos comandos")
+    global tem_erro
+    tem_erro = True
+    parser.errok()
+
+def p_parte_comandos_erro_end(p):
+    "parte_comandos : BEGIN lista_comandos error"
+    print(f"ERRO SINTÁTICO na linha {p.lineno(3)}: esperava 'end' após os comandos")
+    global tem_erro
+    tem_erro = True
+    parser.errok()
 
 # Regra Vazia
 def p_empty(p):
@@ -265,10 +349,10 @@ def p_empty(p):
 def p_error(tok):
     global tem_erro
     tem_erro = True
-    if tok:
-        print(f"ERRO SINTÁTICO na linha {tok.lineno}: Token inesperado '{tok.value}' (Tipo: {tok.type})")
-    else:
+    if tok is None:
         print("ERRO SINTÁTICO: Fim de arquivo inesperado (EOF).")
+        return
+    print(f"ERRO SINTÁTICO na linha {tok.lineno}: Token inesperado '{tok.value}' (Tipo: {tok.type!r})")
 
 def make_parser(start='programa'):
     global parser
@@ -282,5 +366,5 @@ if __name__ == "__main__":
     parser.parse(data, lexer=lexer)
     if not tem_erro:
         print('Análise concluída. Nenhum erro semântico/sintético encontrado!')
-        print('Tabela de Símbolos final:')
+        print('Tabela de Símbolos:')
         print(tab_simbolos.tabela)
