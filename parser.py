@@ -130,7 +130,7 @@ def p_atribuicao(p):
     var = tab_simbolos.busca(nome_var)
     tipo_expr = p[3]
     if not var:
-        erro_semantico(f"Variável '{nome_var}' sem declaração prévia.", p.lineno(1))
+        erro_semantico(f"Variável '{nome_var}' sem declaração prévia", p.lineno(1))
         return
     tipo_var = var['tipo']
 
@@ -164,7 +164,7 @@ def p_chamada_read(p):
     lista_de_nomes = p[3]
     for nome in lista_de_nomes:
         if not tab_simbolos.busca(nome):
-            erro_semantico(f"Variável '{nome}' em read() não foi declarada.", p.lineno(1))
+            erro_semantico(f"Variável '{nome}' em read() não foi declarada", p.lineno(1))
     
 def p_lista_ids_read(p):
     """lista_ids_read : lista_ids
@@ -252,7 +252,7 @@ def p_expressao_menos_unario(p):
         p[0] = None
         return
     if tipo_op != 'integer':
-        erro_semantico(f"Operador de negação '-' requer um operando 'integer'.", p.lineno(1))
+        erro_semantico(f"Operador de negação '-' requer um operando 'integer'", p.lineno(1))
         p[0] = None
     else:
         p[0] = 'integer'
@@ -274,7 +274,7 @@ def p_fator(p):
         nome_var = p[1]
         var = tab_simbolos.busca(nome_var)
         if not var:
-            erro_semantico(f"Variável '{nome_var}' sem declaração prévia.", p.lineno(1))
+            erro_semantico(f"Variável '{nome_var}' sem declaração prévia", p.lineno(1))
             p[0] = None 
         else:
             p[0] = var['tipo'] 
