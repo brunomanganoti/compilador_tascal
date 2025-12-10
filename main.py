@@ -10,7 +10,7 @@ from codegen_tascal import GeradorMepa
 # Get-Content "TestesTascalAtualizado\testes_Tascal_disponibilizado\arq.tascal" | python main.py > "Testes Novos\teste.mep"
 
 # Interpretador:
-# python "mepa_py\mepa_pt.py" --progfile="Testes Novos\testep01.mep"
+# python "mepa_py\mepa_pt.py" --progfile="../arq.mep"
 
 def main():
     try:
