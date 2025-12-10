@@ -8,7 +8,7 @@ class Comando(No):
     pass
 
 class Expressao(No):
-    pass
+    tipo: Optional[str] = None
 
 @dataclass
 class Programa(No):

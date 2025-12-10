@@ -5,11 +5,6 @@ from sem_tascal import AnalisadorSemantico
 from codegen_tascal import GeradorMepa
 
 def main():
-    if sys.stdin.isatty():
-        print("Erro: Utilize redirecionamento de entrada.")
-        print("Exemplo: python main.py < programa.tascal")
-        return
-
     try:
         dados = sys.stdin.read()
     except Exception as e:
