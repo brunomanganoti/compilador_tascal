@@ -24,12 +24,24 @@ reservadas = {
 }
 
 tokens = [
-    'ID', 'NUM',
-    'EPAR', 'DPAR',     
-    'PV', 'DP', 'VIRG', 'PF',
+    'ID', 
+    'NUM',
+    'EPAR', 
+    'DPAR',     
+    'PV', 
+    'DP', 
+    'VIRG', 
+    'PF',
     'ATRIB',   
-    'IGUAL', 'DIFERENTE', 'MENOR', 'MENOR_IGUAL', 'MAIOR', 'MAIOR_IGUAL',
-    'MAIS', 'MENOS', 'VEZES'
+    'IGUAL', 
+    'DIFERENTE', 
+    'MENOR', 
+    'MENOR_IGUAL', 
+    'MAIOR', 
+    'MAIOR_IGUAL',
+    'MAIS', 
+    'MENOS', 
+    'VEZES'
 ] + list(reservadas.values())
 
 # Regras simples

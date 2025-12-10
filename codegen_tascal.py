@@ -85,20 +85,29 @@ class GeradorMepa:
             self._emite("IMPR")
 
     def visita_Condicional(self, node):
-        l_else = self._novo_rotulo()
-        l_fim = self._novo_rotulo()
-
-        self.visita(node.cond)
-        self._emite("DSVF", l_else)
-        
-        self.visita(node.then_cmd)
-        self._emite("DSVS", l_fim)
-        
-        self._emite_rotulo(l_else)
         if node.else_cmd:
+            l_else = self._novo_rotulo()
+            l_fim = self._novo_rotulo()
+
+            self.visita(node.cond)
+            self._emite("DSVF", l_else)
+
+            self.visita(node.then_cmd)
+            self._emite("DSVS", l_fim)
+
+            self._emite_rotulo(l_else)
             self.visita(node.else_cmd)
-        
-        self._emite_rotulo(l_fim)
+
+            self._emite_rotulo(l_fim)
+        else:
+            l_fim = self._novo_rotulo()
+
+            self.visita(node.cond)
+            self._emite("DSVF", l_fim)
+
+            self.visita(node.then_cmd)
+
+            self._emite_rotulo(l_fim)
 
     def visita_Enquanto(self, node):
         l_inicio = self._novo_rotulo()
