@@ -29,7 +29,7 @@ def main():
     print("Iniciando Análise Semântica...", file=sys.stderr)
     semantico = AnalisadorSemantico()
     try:
-        semantico.visit(ast_raiz)
+        semantico.visita(ast_raiz)
     except Exception as e:
         print(f"\nERRO SEMÂNTICO: {e}")
         return
@@ -37,12 +37,12 @@ def main():
     print("Gerando Código MEPA...", file=sys.stderr)
     gerador = GeradorMepa()
     try:
-        gerador.visit(ast_raiz)
+        gerador.visita(ast_raiz)
     except Exception as e:
         print(f"\nERRO DE GERAÇÃO: {e}")
         return
 
-    print(gerador.get_code()) # Saída MEPA
+    print(gerador.junta_mepa()) # Saída MEPA
 
 if __name__ == "__main__":
     main()

@@ -25,9 +25,9 @@ reservadas = {
 
 tokens = [
     'ID', 'NUM',
-    'EPAR', 'DPAR',     # ( )
-    'PV', 'DP', 'VIRG', 'PF', # ; : , .
-    'ATRIB',            # :=
+    'EPAR', 'DPAR',     
+    'PV', 'DP', 'VIRG', 'PF',
+    'ATRIB',   
     'IGUAL', 'DIFERENTE', 'MENOR', 'MENOR_IGUAL', 'MAIOR', 'MAIOR_IGUAL',
     'MAIS', 'MENOS', 'VEZES'
 ] + list(reservadas.values())
@@ -49,12 +49,11 @@ t_MAIOR_IGUAL = r'>='
 t_MAIS = r'\+'
 t_MENOS = r'-'
 t_VEZES = r'\*'
-
 t_ignore = ' \t'
 
 def t_ID(t):
     r'[A-Za-z][A-Za-z0-9_]*'
-    t.type = reservadas.get(t.value.lower(), 'ID') # .lower() garante case-insensitive
+    t.type = reservadas.get(t.value.lower(), 'ID')
     return t
 
 def t_NUM(t):

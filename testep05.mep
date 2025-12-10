@@ -5,14 +5,14 @@
    CRVL 0,0
    CRCT 5
    CMAG
-   DSVF L1
+   DSVF R00
    CRCT 1
    IMPR
-   DSVS L2
-L1: NADA
+   DSVS R01
+R00: NADA
    CRCT 0
    IMPR
-L2: NADA
+R01: NADA
    DMEM 1
    PARA
    FIM

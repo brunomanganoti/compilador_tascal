@@ -1,9 +1,13 @@
-# ast_tascal.py
 from dataclasses import dataclass
-from typing import List, Union
+from typing import List, Optional, Union
 
-# Classe base
 class No:
+    pass
+
+class Comando(No):
+    pass
+
+class Expressao(No):
     pass
 
 @dataclass
@@ -11,71 +15,66 @@ class Programa(No):
     id: str
     declaracoes: List['Declaracao']
     bloco: 'Bloco'
-    total_vars: int = 0  # Preenchido na analise semantica
+    total_vars: int = 0
 
 @dataclass
 class Bloco(No):
-    comandos: List['Comando']
-
-class Comando(No): pass
+    comandos: List[Comando]
 
 @dataclass
 class Declaracao(No):
-    ids: List['Var']
+    ids: List['Identificador']
     tipo: str
 
 @dataclass
 class Atribuicao(Comando):
-    var: 'Var'
-    expressao: 'Expressao'
+    var: 'Identificador'
+    expressao: Expressao
 
 @dataclass
-class If(Comando):
-    condicao: 'Expressao'
+class Condicional(Comando):
+    cond: Expressao
     then_cmd: Comando
     else_cmd: Union[Comando, None]
 
 @dataclass
-class While(Comando):
-    condicao: 'Expressao'
-    body: Comando
+class Enquanto(Comando):
+    cond: Expressao
+    bloco: Comando
 
 @dataclass
-class Read(Comando):
-    vars: List['Var']
+class Leitura(Comando):
+    vars: List['Identificador']
 
 @dataclass
-class Write(Comando):
-    exps: List['Expressao']
+class Escrita(Comando):
+    exps: List[Expressao]
 
 @dataclass
 class ComandoComposto(Comando):
     comandos: List[Comando]
 
-class Expressao(No): pass
-
 @dataclass
-class BinOp(Expressao):
+class CalculoBinario(Expressao):
     esq: Expressao
     op: str
     dir: Expressao
 
 @dataclass
-class UnOp(Expressao):
+class CalculoUnario(Expressao):
     op: str
     expr: Expressao
 
 @dataclass
-class Var(Expressao):
+class Identificador(Expressao):
     nome: str
-    # Campos preenchidos pelo analisador semântico
     tipo: str = None
     deslocamento: int = None 
 
 @dataclass
-class Num(Expressao):
+class Numero(Expressao):
     valor: int
 
 @dataclass
-class Bool(Expressao):
+class Booleano(Expressao):
     valor: bool
