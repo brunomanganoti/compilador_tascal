@@ -4,6 +4,9 @@ from parser_tascal_mepa import make_parser
 from sem_tascal import AnalisadorSemantico
 from codegen_tascal import GeradorMepa
 
+# Testes realizados com: 
+# Get-Content "TestesTascalAtualizado\testes_Tascal_disponibilizado\arq.tascal" | python main.py > "Testes Novos\teste.mep"
+
 def main():
     try:
         dados = sys.stdin.read()
