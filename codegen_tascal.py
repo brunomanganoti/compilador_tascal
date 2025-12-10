@@ -24,9 +24,11 @@ class GeradorMepa:
             if node.total_vars > 0:
                 self.emit("AMEM", node.total_vars)
             
-            # CORREÇÃO: Usando 'bloco' conforme definido na AST
             self.visit(node.bloco)
             
+            if node.total_vars > 0:
+                self._emite(f"DMEM {node.total_vars}")
+
             self.emit("PARA")
             self.emit("FIM")
 
