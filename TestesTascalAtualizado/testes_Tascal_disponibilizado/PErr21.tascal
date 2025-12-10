@@ -1,0 +1,7 @@
+program PErr21;
+var
+    v: integer;
+begin
+    x := 10;
+    write(x)
+end.

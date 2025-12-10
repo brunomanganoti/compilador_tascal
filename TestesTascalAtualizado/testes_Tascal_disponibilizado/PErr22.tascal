@@ -1,0 +1,12 @@
+program PErr22;
+var
+    i: integer;
+    b: boolean;
+begin
+    i := true;
+    
+    if 10 then
+    begin
+        write(i);
+    end
+end.

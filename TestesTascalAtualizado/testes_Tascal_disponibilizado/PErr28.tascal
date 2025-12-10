@@ -1,0 +1,9 @@
+program PErr28;
+var
+    x: integer; 
+    b: boolean;
+begin
+    read(x);
+    write(y);
+    x := b div 5;
+end.

@@ -1,0 +1,10 @@
+program teste;
+var
+    i: integer;
+    b: boolean;
+begin
+    b := not 10;
+    i := true div 2;
+    i := 9;
+    write(i, b);
+end.

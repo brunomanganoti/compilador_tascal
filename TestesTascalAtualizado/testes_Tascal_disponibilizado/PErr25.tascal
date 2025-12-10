@@ -1,0 +1,8 @@
+program PErr25;
+var
+    x: integer;
+begin
+    x := 105;
+    read(10);
+    write(x)
+end.

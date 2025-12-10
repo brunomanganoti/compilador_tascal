@@ -1,0 +1,15 @@
+program PErr27;
+var
+    x: integer;
+    b: boolean;
+begin
+    x := 10;
+    b := (x = true);
+    
+    if b then
+        write(x)
+    else
+        write(1);
+        
+    x := x div 2;
+end.

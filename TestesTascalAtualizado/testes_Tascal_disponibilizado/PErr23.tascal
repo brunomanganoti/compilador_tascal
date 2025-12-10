@@ -1,0 +1,8 @@
+program PErr23;
+var
+    x: integer;
+    y: boolean;
+begin
+    y := x + true;
+    write(y);
+end.

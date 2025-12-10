@@ -1,0 +1,10 @@
+program PErr26;
+var
+    b: boolean;
+    i: integer;
+begin
+    i := 10;
+    b := 10 and 20;
+    b := true > false
+    write(b)
+end.
