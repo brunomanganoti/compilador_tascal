@@ -1,4 +1,7 @@
+from typing import List
 from ast_tascal import *
+
+NIVEL_LEXICO = 0
 
 class GeradorMepa:
     mepa_ops = {
@@ -19,7 +22,8 @@ class GeradorMepa:
     }
 
     def __init__(self):
-        self.codigo = []
+        self.codigo: List[str] = []
+        self.erros: List[str] = []
         self.count_rotulos = 0
     
     def _novo_rotulo(self):
@@ -29,9 +33,9 @@ class GeradorMepa:
     
     def _emite(self, instr, arg=""):
         if arg != "":
-            self.codigo.append(f"   {instr} {arg}")
+            self.codigo.append(f"    {instr} {arg}")
         else:
-            self.codigo.append(f"   {instr}")
+            self.codigo.append(f"    {instr}")
     
     def _emite_rotulo(self, label):
         self.codigo.append(f"{label}: NADA")
@@ -71,13 +75,13 @@ class GeradorMepa:
         self.visita(node.expressao)
         if node.var.deslocamento is None:
             raise Exception(f"Erro Interno: Variável {node.var.nome} sem endereço.")
-        self._emite("ARMZ", f"0,{node.var.deslocamento}")
+        self._emite("ARMZ", f"{NIVEL_LEXICO},{node.var.deslocamento}")
 
     def visita_Leitura(self, node):
         for var in node.vars:
             self._emite("LEIT")
             if var.deslocamento is not None:
-                self._emite("ARMZ", f"0,{var.deslocamento}")
+                self._emite("ARMZ", f"{NIVEL_LEXICO},{var.deslocamento}")
 
     def visita_Escrita(self, node):
         for exp in node.exps:
@@ -87,12 +91,13 @@ class GeradorMepa:
     def visita_Condicional(self, node):
         if node.else_cmd:
             l_else = self._novo_rotulo()
-            l_fim = self._novo_rotulo()
 
             self.visita(node.cond)
             self._emite("DSVF", l_else)
 
             self.visita(node.then_cmd)
+            
+            l_fim = self._novo_rotulo()
             self._emite("DSVS", l_fim)
 
             self._emite_rotulo(l_else)
@@ -140,7 +145,7 @@ class GeradorMepa:
             self._emite("INVR")
 
     def visita_Identificador(self, node):
-        self._emite("CRVL", f"0,{node.deslocamento}")
+        self._emite("CRVL", f"{NIVEL_LEXICO},{node.deslocamento}")
 
     def visita_Numero(self, node):
         self._emite("CRCT", node.valor)

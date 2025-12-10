@@ -4,11 +4,8 @@ import ast_tascal as ast
 
 # Precedência
 precedence = (
-    ('left', 'OR'),
-    ('left', 'AND'),
-    ('nonassoc', 'IGUAL', 'DIFERENTE', 'MENOR', 'MENOR_IGUAL', 'MAIOR', 'MAIOR_IGUAL'),
-    ('left', 'MAIS', 'MENOS'),
-    ('left', 'VEZES', 'DIV'),
+    ('nonassoc', 'IF'),
+    ('nonassoc', 'ELSE'),
     ('right', 'NOT'),
 )
 
