@@ -4,8 +4,13 @@ from parser_tascal_mepa import make_parser
 from sem_tascal import AnalisadorSemantico
 from codegen_tascal import GeradorMepa
 
-# Testes realizados com: 
+# Testes realizados:
+
+# Geração de código MEPA:
 # Get-Content "TestesTascalAtualizado\testes_Tascal_disponibilizado\arq.tascal" | python main.py > "Testes Novos\teste.mep"
+
+# Interpretador:
+# python "mepa_py\mepa_pt.py" --progfile="Testes Novos\testep01.mep"
 
 def main():
     try:
