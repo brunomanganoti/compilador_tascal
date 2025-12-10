@@ -27,7 +27,7 @@ class GeradorMepa:
             self.visit(node.bloco)
             
             if node.total_vars > 0:
-                self._emite(f"DMEM {node.total_vars}")
+                self.emit(f"DMEM {node.total_vars}")
 
             self.emit("PARA")
             self.emit("FIM")
